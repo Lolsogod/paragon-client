@@ -8,9 +8,9 @@
   padding: 0 10%;
 }
 
-.logo {
-  font-size: 2.2rem;
-  color: white;
+.logo a{
+  font-size: 2.2rem !important;
+  color: white !important;
 }
 
 .header ul {

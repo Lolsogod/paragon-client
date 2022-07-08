@@ -1,27 +1,12 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Link from 'next/link'
+
 import CarList from "../components/CarList";
-import {GetServerSideProps, GetStaticProps} from "next";
+import {GetStaticProps} from "next";
 import {getCookie} from "cookies-next";
 import axios from "axios";
 import {useEffect, useState} from "react";
 
-//remove later
-/*const FAKE_RESPONSE = [
-    {
-        id: 10,
-        year: 2012,
-        brand: "Volkswagen",
-        model: "Polo"
-    },
-    {
-        id: 11,
-        year: 2019,
-        brand: "Volkswagen",
-        model: "Tiguan"
-    }
-]*/
 
 const Home: NextPage = (props: any) => {
 
@@ -56,9 +41,9 @@ export const getServerSideProps: GetServerSideProps = async (context) =>{
 export const getStaticProps: GetStaticProps = async () => {
     let cars: any[]=[];
 
-    /*await axios.get('http://localhost:5000/cars/')
+    await axios.get('http://localhost:8080/cars/')
         .then(res => cars = res.data)
-        .catch(()=> cars = [])*/
+        .catch(()=> cars = [])
 
     return{
         props:{
