@@ -1,9 +1,12 @@
 import classes from './CarDetail.module.css'
 
-const CarDetail = (props:any) =>{
+const CarDetail = (props: any) =>{
     return(
         <>
-            <h1>{props.model} is cool</h1>
+            <h1>{props.carInfo.brand} {props.carInfo.model} is cool</h1>
+            <h2>Год: {props.carInfo.year}</h2>
+            <h2>Состояние: {props.carInfo.condition}</h2>
+            <h2>Цена: {props.carInfo.price}</h2>
         </>
     )
 }

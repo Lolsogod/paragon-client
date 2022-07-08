@@ -9,9 +9,8 @@
 }
 
 .logo {
-  font-size: 2rem;
+  font-size: 2.2rem;
   color: white;
-  font-weight: bold;
 }
 
 .header ul {
@@ -28,8 +27,8 @@
 
 .header a {
   text-decoration: none;
-  font-size: 1.5rem;
-  color: #ffffff;
+  font-size: 1.4rem;
+  color: #d3d3d3;
 }
 
 .header a:hover,

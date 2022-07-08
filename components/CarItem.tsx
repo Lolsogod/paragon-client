@@ -1,17 +1,22 @@
-//TODO: посмотреть гайдик из телеги
 import Card from "./ui/Card";
 import classes from './CarItem.module.css'
 import Link from "next/link";
+import Image from "next/image"
+import sampleCar from "../public/sample_car.jpg"
+import Button from "./ui/Button";
 
 const CarItem = (props: any) => {
     return(
         <li className={classes.item}>
             <Card>
+                <div className={classes.image}>
+                    <Image src={sampleCar}></Image>
+                </div>
                 <div className={classes.content}>
                     <b>{props.brand} {props.model}</b> {props.year}
                 </div>
                 <div className={classes.actions}>
-                    <button><Link href={`${props.model}`}>Инфо</Link></button>
+                    <Button href={`${props.id}`}>Инфо</Button>
                 </div>
             </Card>
         </li>
