@@ -6,6 +6,7 @@ import axios from "axios";
 import jwt from "jsonwebtoken"
 import {setCookie} from 'cookies-next';
 import {serialize} from "cookie";
+import {router} from "next/client";
 
 const Auth: NextPage = (props: any) => {
     const [username, setUsername] = useState<string>('')
@@ -13,7 +14,7 @@ const Auth: NextPage = (props: any) => {
 
     const submitForm = async () =>{
         let token: string = '';
-        await axios.post("http://localhost:5001/auth/token",
+        await axios.post("http://localhost:8081/auth/token",
             {username, password})
             .then(t => token=t.data.token)
         setCookie('jwtCookie', token, {maxAge: 60 * 6 * 24 });
@@ -21,7 +22,7 @@ const Auth: NextPage = (props: any) => {
         const decodedToken = jwt.decode(token)
         // @ts-ignore
         alert(`Hello ${decodedToken.sub}`)*/
-
+        await router.push("/")
     }
     return (
         <>

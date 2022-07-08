@@ -22,7 +22,7 @@ const CarId: NextPage = (props: any) => {
 }
 export const getStaticProps: GetStaticProps = async (context: any) => {
     let car;
-    await axios.get(`http://localhost:5000/cars/${context.params.carId}`)
+    await axios.get(`http://localhost:8080/cars/${context.params.carId}`)
         .then(res => car = res.data)
     console.log(car)
     return{
@@ -35,7 +35,7 @@ export const getStaticProps: GetStaticProps = async (context: any) => {
 }
 export const getStaticPaths: GetStaticPaths = async () => {
     let ids: any[] = [];
-    await axios.get(`http://localhost:5000/cars/allIds`)
+    await axios.get(`http://localhost:8080/cars/allIds`)
         .then(res => ids = res.data)
     console.log(ids.map(id => ({params: {carId: id}})))
     return {

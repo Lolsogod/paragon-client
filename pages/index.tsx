@@ -27,7 +27,7 @@ const Home: NextPage = (props: any) => {
 
     const [cars, setCars] = useState(props.cars)
     useEffect(()=>{
-        axios.get('http://localhost:5000/cars/',{
+        axios.get('http://localhost:8080/cars/',{
             headers: {Authorization: `Bearer ${getCookie("jwtCookie")}`}})
             .then(res => setCars(res.data))
         console.log("here")
