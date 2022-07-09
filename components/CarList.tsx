@@ -11,6 +11,7 @@ const CarList = (props: any) =>{
                     year={car.year}
                     brand={car.brand}
                     model={car.model}
+                    price={car.price}
                 />
             ))}
         </ul>

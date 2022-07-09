@@ -14,6 +14,8 @@ const CarItem = (props: any) => {
                 </div>
                 <div className={classes.content}>
                     <b>{props.brand} {props.model}</b> {props.year}
+                    <br/>
+                    {props.price} руб
                 </div>
                 <div className={classes.actions}>
                     <Button href={`${props.id}`}>Инфо</Button>
