@@ -3,20 +3,20 @@ import Head from 'next/head'
 
 import CarList from "../components/CarList";
 import {GetStaticProps} from "next";
-import {getCookie} from "cookies-next";
 import axios from "axios";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
+import {AuthContext} from "../context/AuthContext";
 
 
 const Home: NextPage = (props: any) => {
-
+    const auth = useContext(AuthContext)
     const [cars, setCars] = useState(props.cars)
     useEffect(()=>{
         axios.get('http://localhost:8080/cars/',{
-            headers: {Authorization: `Bearer ${getCookie("jwtCookie")}`}})
+            headers: {Authorization: `Bearer ${auth.token}`}})
             .then(res => setCars(res.data))
         console.log("here")
-    },[])
+    },[auth.token])
   return (
       <>
           <Head>

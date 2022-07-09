@@ -1,9 +1,11 @@
 import Link from "next/link";
 import classes from './MainNavigation.module.css';
 import LogOut from "../LogOut";
+import {useContext} from "react";
+import {AuthContext} from "../../context/AuthContext";
 
 
-function MainNavigation() {
+function MainNavigation(props: any) {
   return (
     <header className={classes.header}>
       <div className={classes.logo}>
@@ -11,16 +13,12 @@ function MainNavigation() {
       </div>
       <nav>
         <ul>
-
-          <li>
-            <Link href='/auth'>Войти</Link>
-          </li>
-            <li>
-                <Link href='/register'>Регистрация</Link>
-            </li>
-            <li>
-                <LogOut/>
-            </li>
+            {!props.isAuthenticated && <>
+                <li><Link href='/login'>Войти</Link></li>
+            <li><Link href='/register'>Регистрация</Link></li>
+            </>}
+            {props.isAuthenticated  &&
+            <li><LogOut/></li>}
         </ul>
       </nav>
     </header>

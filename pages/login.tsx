@@ -1,27 +1,21 @@
 import {NextPage} from "next";
 import Head from "next/head";
-import CarList from "../components/CarList";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import axios from "axios";
-import jwt from "jsonwebtoken"
-import {setCookie} from 'cookies-next';
-import {serialize} from "cookie";
-import {router} from "next/client";
+import router from "next/router";
+import {AuthContext} from "../context/AuthContext";
 
-const Auth: NextPage = (props: any) => {
+
+const Login: NextPage = (props: any) => {
+    const auth = useContext(AuthContext)
     const [username, setUsername] = useState<string>('')
     const [password, setPassword] = useState<string>('')
 
     const submitForm = async () =>{
-        let token: string = '';
         await axios.post("http://localhost:8081/auth/token",
             {username, password})
-            .then(t => token=t.data.token)
-        setCookie('jwtCookie', token, {maxAge: 60 * 6 * 24 });
-        /*
-        const decodedToken = jwt.decode(token)
-        // @ts-ignore
-        alert(`Hello ${decodedToken.sub}`)*/
+            // @ts-ignore
+            .then(res => auth.login(res.data.token))
         await router.push("/")
     }
     return (
@@ -39,7 +33,6 @@ const Auth: NextPage = (props: any) => {
             </form>
         </>
     )
-
 }
 
-export default Auth;
+export default Login;

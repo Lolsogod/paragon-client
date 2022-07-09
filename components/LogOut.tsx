@@ -1,9 +1,11 @@
-import {deleteCookie} from "cookies-next";
-import Link from "next/link";
+import {useContext} from "react";
+import {AuthContext} from "../context/AuthContext";
+
 
 function LogOut() {
+    const auth = useContext(AuthContext)
     const logOut = () =>{
-        deleteCookie("jwtCookie")
+        auth.logout()
         window.location.reload()
     }
     return(
