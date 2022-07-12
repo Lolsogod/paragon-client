@@ -1,5 +1,6 @@
 import CarItem from "./CarItem";
 import classes from  "./CarList.module.css"
+import EditItem from "./EditItem";
 
 const CarList = (props: any) =>{
     return(

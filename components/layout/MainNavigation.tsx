@@ -17,8 +17,11 @@ function MainNavigation(props: any) {
                 <li><Link href='/login'>Войти</Link></li>
             <li><Link href='/register'>Регистрация</Link></li>
             </>}
-            {props.isAuthenticated  &&
-            <li><LogOut/></li>}
+            {props.isAuthenticated  &&<>
+                <li><Link href="/admin">Админ-панель</Link></li>
+                <li><LogOut/></li>
+            </>
+           }
         </ul>
       </nav>
     </header>

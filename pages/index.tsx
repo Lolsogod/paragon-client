@@ -11,12 +11,12 @@ import {AuthContext} from "../context/AuthContext";
 const Home: NextPage = (props: any) => {
     const auth = useContext(AuthContext)
     const [cars, setCars] = useState(props.cars)
-    useEffect(()=>{
-        axios.get('http://localhost:8080/cars/',{
+    /*useEffect(()=>{
+        axios.get('/api/cars/',{
             headers: {Authorization: `Bearer ${auth.token}`}})
             .then(res => setCars(res.data))
         console.log("here")
-    },[auth.token])
+    },[auth.token])*/
   return (
       <>
           <Head>
@@ -49,7 +49,7 @@ export const getStaticProps: GetStaticProps = async () => {
         props:{
             cars: cars
         },
-        revalidate: 3600
+        revalidate: 1
     }
 }
 export default Home
