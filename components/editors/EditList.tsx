@@ -1,10 +1,9 @@
-import CarItem from "./CarItem";
-import classes from  "./CarList.module.css"
+import classes from "../CarList.module.css"
 import EditItem from "./EditItem";
 import {useContext, useEffect, useState} from "react";
 import axios from "axios";
-import {AuthContext} from "../context/AuthContext";
-import Button from "./ui/Button";
+import {AuthContext} from "../../context/AuthContext";
+import Button from "../ui/Button";
 
 const EditList = (props: any) =>{
     const auth = useContext(AuthContext)
@@ -34,6 +33,8 @@ const EditList = (props: any) =>{
         <Button href='/admin/new-brand'>Добавить брэнд</Button>
             <br/>
             <Button href='/admin/new-model'>Добавить модель</Button>
+            <br/>
+            <Button href='/admin/new-car'>Добавить машину</Button>
         </>
 )
 }

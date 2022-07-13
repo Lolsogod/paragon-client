@@ -17,8 +17,10 @@ function MainNavigation(props: any) {
                 <li><Link href='/login'>Войти</Link></li>
             <li><Link href='/register'>Регистрация</Link></li>
             </>}
+            {console.log(props.role)}
             {props.isAuthenticated  &&<>
-                <li><Link href="/admin">Админ-панель</Link></li>
+                {props.role == "admin" && <li><Link href="/admin">Админ-панель</Link></li>}
+                <li><Link href="/profile">Порофиль</Link></li>
                 <li><LogOut/></li>
             </>
            }

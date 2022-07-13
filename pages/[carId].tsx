@@ -30,13 +30,16 @@ export const getStaticProps: GetStaticProps = async (context: any) => {
             // @ts-ignore
             carInfo: car
         },
-        revalidate: 3600
+        revalidate: 1
     }
 }
 export const getStaticPaths: GetStaticPaths = async () => {
     let ids: any[] = [];
     await axios.get(`http://localhost:8080/cars/allIds`)
-        .then(res => ids = res.data)
+        .then(res => {
+            ids = res.data
+            console.log(res.data)
+        })
     console.log(ids.map(id => ({params: {carId: id}})))
     return {
         paths: ids.map(id => ({params: {carId: id.toString()}})),

@@ -8,6 +8,7 @@ import axios from "axios";
 const NewModel = (props: any)=>{
     const auth = useContext(AuthContext)
     const [brands, setBrands] = useState<any[]>([])
+
     useEffect(()=>{
         if(!!auth.token){
             axios.get('/api/cars/brand',
@@ -15,8 +16,8 @@ const NewModel = (props: any)=>{
                 .then(res => setBrands(res.data))
         }
     },[auth.token])
+    if(auth.role != "admin") return <div>нет доступа</div>
     return( <div>
-
         <AddModel brands={brands}/>
     </div>)
 }

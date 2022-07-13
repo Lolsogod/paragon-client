@@ -1,12 +1,11 @@
-import Card from "./ui/Card";
-import classes from './EditItem.module.css'
-import Link from "next/link";
+import classes from '../editors/EditItem.module.css'
+import Card from "../ui/Card";
 import Image from "next/image"
-import sampleCar from "../public/sample_car.jpg"
-import Button from "./ui/Button";
+import sampleCar from "../../public/sample_car.jpg"
+import Button from "../ui/Button";
 import {useContext, useEffect, useState} from "react";
 import axios from "axios";
-import {AuthContext} from "../context/AuthContext";
+import {AuthContext} from "../../context/AuthContext";
 
 const EditItem = (props: any) => {
     const auth = useContext(AuthContext)
@@ -23,25 +22,20 @@ const EditItem = (props: any) => {
     const [models, setModels] = useState<any[]>([])
 
     useEffect(()=>{
-        if(!!auth.token && !!form.brand_id){
-            axios.get(`/api/cars/model?brand_id=${form.brand_id}`,
-                {headers: {Authorization: `Bearer ${auth.token}`}})
-                .then(res => {
-                    setModels(res.data)
-                })
+        if(!!auth.token){
+            if(!!form.brand_id){
+                axios.get(`/api/cars/model?brand_id=${form.brand_id}`,
+                    {headers: {Authorization: `Bearer ${auth.token}`}})
+                    .then(res => setModels(res.data))
+            }else setModels([])
         }
     },[auth.token, form.brand_id])
 
 
-    const saveHandler = () =>{
-        axios.post('/api/cars/edit',{...form, id: props.id},
+    const addHandler = () =>{
+        axios.post('/api/cars/',{...form},
             {headers: {Authorization: `Bearer ${auth.token}`}})
             .then(res => console.log(res))
-    }
-    const deleteHandler = () =>{
-        axios.post(`/api/cars/delete/${props.id}`,{},
-            {headers: {Authorization: `Bearer ${auth.token}`}})
-            .then(res => alert("deleted!"))
     }
 
     return(
@@ -51,8 +45,8 @@ const EditItem = (props: any) => {
                     <Image src={sampleCar}></Image>
                 </div>
                 <div className={classes.content}>
-                    id({props.id})
                     <select value={form.brand_id} onChange={changeHandler} id="brand_id" name="brand_id">
+                        <option value="">----------</option>
                         {props.brands.map((br: any, index:any) =>{
                             return(<option key={index} value={br.id}>{br.brand}</option>)})}
                     </select>
@@ -67,13 +61,13 @@ const EditItem = (props: any) => {
                     <input type="number" value={form.price}
                            onChange={changeHandler} name='price' id='price'/> руб
                     <select value={form.condition} onChange={changeHandler} id="condition" name="condition">
+                        <option value="">----------</option>
                         <option  value='NEW'>NEW</option>
                         <option  value='USED'>USED</option>
                     </select>
                 </div>
                 <div className={classes.actions}>
-                    <Button onClick={saveHandler}>Сохранить</Button>
-                    <Button onClick={deleteHandler}>Удалить</Button>
+                    <Button onClick={addHandler}>Добавить</Button>
                 </div>
 
             </Card>

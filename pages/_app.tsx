@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     return (
         // @ts-ignore
       <AuthContext.Provider value={{token, login, logout, role, userId, email}}>
-          <Layout isAuthenticated={isAuthenticated}>
+          <Layout isAuthenticated={isAuthenticated} role={role}>
             <Component {...pageProps} isAuthenticated={isAuthenticated} />
           </Layout>
       </AuthContext.Provider>

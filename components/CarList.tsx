@@ -1,6 +1,6 @@
 import CarItem from "./CarItem";
 import classes from  "./CarList.module.css"
-import EditItem from "./EditItem";
+import EditItem from "./editors/EditItem";
 
 const CarList = (props: any) =>{
     return(
@@ -13,6 +13,7 @@ const CarList = (props: any) =>{
                     brand={car.brand}
                     model={car.model}
                     price={car.price}
+                    sold={car.sold}
                 />
             ))}
         </ul>

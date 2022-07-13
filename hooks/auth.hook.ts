@@ -17,9 +17,10 @@ export const useAuth = () =>{
 
     const login = useCallback((jwtToken: any) => {
         setToken(jwtToken);
-        /*const parsed = parseJwt(jwtToken);
+        const parsed = parseJwt(jwtToken);
+        console.log(parsed)
         setRole(parsed.role);
-        setUserId(parsed.jti);
+        /*setUserId(parsed.jti);
         setEmail(parsed.sub);*/
 
         localStorage.setItem(storageName, JSON.stringify({

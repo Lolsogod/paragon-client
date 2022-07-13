@@ -11,12 +11,6 @@ import {AuthContext} from "../context/AuthContext";
 const Home: NextPage = (props: any) => {
     const auth = useContext(AuthContext)
     const [cars, setCars] = useState(props.cars)
-    /*useEffect(()=>{
-        axios.get('/api/cars/',{
-            headers: {Authorization: `Bearer ${auth.token}`}})
-            .then(res => setCars(res.data))
-        console.log("here")
-    },[auth.token])*/
   return (
       <>
           <Head>
@@ -27,17 +21,7 @@ const Home: NextPage = (props: any) => {
   )
 
 }
-/*
-export const getServerSideProps: GetServerSideProps = async (context) =>{
-    const req = context.req;
-    const res = context.res;
 
-    return{
-        props:{
-            cars: FAKE_RESPONSE
-        }
-    }
-}*/
 export const getStaticProps: GetStaticProps = async () => {
     let cars: any[]=[];
 

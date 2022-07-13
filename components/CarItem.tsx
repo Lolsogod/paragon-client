@@ -18,7 +18,7 @@ const CarItem = (props: any) => {
                     {props.price} руб
                 </div>
                 <div className={classes.actions}>
-                    <Button href={`${props.id}`}>Инфо</Button>
+                     <Button href={`${props.id}`}>Инфо</Button>
                 </div>
             </Card>
         </li>

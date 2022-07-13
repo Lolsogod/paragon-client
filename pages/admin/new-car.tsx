@@ -3,16 +3,16 @@ import Link from "next/link";
 import axios from "axios";
 import CarList from "../../components/CarList";
 import EditList from "../../components/editors/EditList";
+import AddCar from "../../components/adders/AddCar";
 import {useContext} from "react";
 import {AuthContext} from "../../context/AuthContext";
-import NoAccess from "../../components/layout/NoAccess";
 
 const Admin: NextPage = (props: any) => {
     const auth = useContext(AuthContext)
     if(auth.role != "admin") return <div>нет доступа</div>
     return (
         <>
-            <EditList cars={props.cars}/>
+            <AddCar cars={props.cars}/>
         </>
     )
 }
