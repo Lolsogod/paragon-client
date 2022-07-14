@@ -22,15 +22,16 @@ const AddModel = (props: any) =>{
     return(
         <div>
             <h2>Добавить модель</h2>
-            <h4>брэнд</h4>
+            <label htmlFor="brand_id">Брэнд</label>
             <select value={brand} onChange={brandChange} id="brand_id" name="brand_id">
                 <option value="">----------------</option>
                 {props.brands.map((br: any, index:any) =>{
                     return(<option key={index} value={br.id}>{br.brand}</option>)})}
             </select>
-            <br/>
+            <br/><br/>
             <input type="text" placeholder="Введите имя"
                    onChange={changeHandler} value={model}/>
+            <br/><br/>
             <Button onClick={send}>Добавить</Button>
         </div>
     )

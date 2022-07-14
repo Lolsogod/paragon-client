@@ -8,7 +8,7 @@ import {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../context/AuthContext";
 
 
-const Home: NextPage = (props: any) => {
+const Home: NextPage = (props:any) => {
     const auth = useContext(AuthContext)
     const [cars, setCars] = useState(props.cars)
   return (

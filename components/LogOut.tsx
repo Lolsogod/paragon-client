@@ -9,7 +9,7 @@ function LogOut() {
         window.location.reload()
     }
     return(
-        <a onClick={logOut}>Выйти</a>
+        <a onClick={logOut}>ВЫЙТИ</a>
     )
 }
 

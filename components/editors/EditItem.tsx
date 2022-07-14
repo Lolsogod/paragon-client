@@ -51,25 +51,28 @@ const EditItem = (props: any) => {
                     <Image src={sampleCar}></Image>
                 </div>
                 <div className={classes.content}>
-                    id({props.id})
-                    <select value={form.brand_id} onChange={changeHandler} id="brand_id" name="brand_id">
-                        {props.brands.map((br: any, index:any) =>{
-                            return(<option key={index} value={br.id}>{br.brand}</option>)})}
-                    </select>
-                    <select value={form.model_id} onChange={changeHandler} id="model_id" name="model_id">
-                        <option value="">----------</option>
-                        {models.map((md, index) =>{
-                            return(<option key={index} value={md.id}>{md.model}</option>)})}
-                    </select>
-                    <input type="number" min="1900" max="2022" step="1" value={form.year}
-                           onChange={changeHandler} name='year' id='year'/>
-                    <br/>
-                    <input type="number" value={form.price}
-                           onChange={changeHandler} name='price' id='price'/> руб
-                    <select value={form.condition} onChange={changeHandler} id="condition" name="condition">
-                        <option  value='NEW'>NEW</option>
-                        <option  value='USED'>USED</option>
-                    </select>
+                    <div className={classes.flex}>
+                        <div>id({props.id})</div>
+                        <select value={form.brand_id} onChange={changeHandler} id="brand_id" name="brand_id">
+                            {props.brands.map((br: any, index:any) =>{
+                                return(<option key={index} value={br.id}>{br.brand}</option>)})}
+                        </select>
+                        <select value={form.model_id} onChange={changeHandler} id="model_id" name="model_id">
+                            <option value="">----------</option>
+                            {models.map((md, index) =>{
+                                return(<option key={index} value={md.id}>{md.model}</option>)})}
+                        </select>
+                        <input className={classes.year} type="number" min="1900" max="2022" step="1" value={form.year}
+                               onChange={changeHandler} name='year' id='year'/>
+                    </div>
+                    <div className={classes.flex}>
+                        <input className={classes.price} type="number" value={form.price}
+                               onChange={changeHandler} name='price' id='price'/>руб
+                        <select value={form.condition} onChange={changeHandler} id="condition" name="condition">
+                            <option  value='NEW'>NEW</option>
+                            <option  value='USED'>USED</option>
+                        </select>
+                    </div>
                 </div>
                 <div className={classes.actions}>
                     <Button onClick={saveHandler}>Сохранить</Button>

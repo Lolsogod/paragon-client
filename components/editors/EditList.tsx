@@ -16,6 +16,11 @@ const EditList = (props: any) =>{
         }
     },[auth.token])
     return(<>
+            <div className={classes.adders}>
+                <Button href='/admin/new-brand'>Добавить брэнд</Button>
+                <Button href='/admin/new-model'>Добавить модель</Button>
+                <Button href='/admin/new-car'>Добавить машину</Button>
+            </div>
         <ul className={classes.list}>
             {props.cars.map((car: any) => (
                     <EditItem
@@ -30,11 +35,6 @@ const EditList = (props: any) =>{
     />
 ))}
     </ul>
-        <Button href='/admin/new-brand'>Добавить брэнд</Button>
-            <br/>
-            <Button href='/admin/new-model'>Добавить модель</Button>
-            <br/>
-            <Button href='/admin/new-car'>Добавить машину</Button>
         </>
 )
 }

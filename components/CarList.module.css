@@ -3,3 +3,9 @@
     margin: 0;
     padding: 0;
 }
+.adders{
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 1rem;
+}

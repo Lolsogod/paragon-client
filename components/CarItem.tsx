@@ -13,9 +13,10 @@ const CarItem = (props: any) => {
                     <Image src={sampleCar}></Image>
                 </div>
                 <div className={classes.content}>
-                    <b>{props.brand.brand} {props.model.model}</b> {props.year}
+                    <span className={classes.title}>{props.brand.brand} {props.model.model} </span>
+                    {props.year} {props.condition}
                     <br/>
-                    {props.price} руб
+                    <span className={classes.price}>{props.price}</span> руб
                 </div>
                 <div className={classes.actions}>
                      <Button href={`${props.id}`}>Инфо</Button>

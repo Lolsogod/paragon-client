@@ -5,8 +5,9 @@ import {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../context/AuthContext";
 import axios from "axios";
 import CarList from "../components/CarList";
+import {ScriptProps} from "next/script";
 
-const Profile: NextPage = (props: any) => {
+const Profile: NextPage = () => {
     const auth = useContext(AuthContext)
     const [user, setUser] = useState({
         name: '', surname: '', patronymic:''

@@ -1,14 +1,14 @@
 .btn {
-    display: block;
+    display: inline-block;
     font: inherit;
     cursor: pointer;
-    color: #860000;
-    border: 1px solid #8a0000;
+    color: #557A95;
+    border: 1px solid #557A95;
     background-color: transparent;
     padding: 0.5rem 1.5rem;
     border-radius: 4px;
 }
 .btn:hover,
 .btn:active {
-    background-color: #ffe2e2;
+    background-color: #d0e7f8;
 }

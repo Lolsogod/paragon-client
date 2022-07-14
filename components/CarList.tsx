@@ -14,6 +14,7 @@ const CarList = (props: any) =>{
                     model={car.model}
                     price={car.price}
                     sold={car.sold}
+                    condition={car.condition}
                 />
             ))}
         </ul>

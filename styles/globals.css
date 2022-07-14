@@ -14,3 +14,9 @@ a {
 * {
   box-sizing: border-box;
 }
+label{
+  display: block;
+}
+input, select{
+  padding: .3rem .5rem;
+}

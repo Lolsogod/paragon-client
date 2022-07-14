@@ -16,7 +16,6 @@
 }
 
 .content {
-    text-align: center;
     padding: 1rem;
 }
 
@@ -43,4 +42,11 @@
 .actions button:hover,
 .actions button:active {
     background-color: #ffe2e2;
+}
+.title{
+    font-weight: bold;
+    font-size: 2rem;
+}
+.price{
+    font-size: 1.3rem;
 }

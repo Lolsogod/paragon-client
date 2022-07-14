@@ -4,11 +4,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #a10000;
+  background-color: #5D5C61;
   padding: 0 10%;
 }
 
 .logo a{
+  font-weight: bold;
   font-size: 2.2rem !important;
   color: white !important;
 }
@@ -26,6 +27,7 @@
 }
 
 .header a {
+  font-weight: bold;
   text-decoration: none;
   font-size: 1.4rem;
   color: #d3d3d3;
