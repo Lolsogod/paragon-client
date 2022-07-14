@@ -6,7 +6,7 @@ import {AuthContext} from "../context/AuthContext";
 const UserInfo = (props: any) =>{
     return(
         <>
-            <h1>{props.name} {props.surname} {props.patronymic}</h1>
+            <h1>{props.surname} {props.name} {props.patronymic}</h1>
         </>
     )
 }

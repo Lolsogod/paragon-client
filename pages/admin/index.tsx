@@ -9,7 +9,7 @@ import NoAccess from "../../components/layout/NoAccess";
 
 const Admin: NextPage = (props: any) => {
     const auth = useContext(AuthContext)
-    if(auth.role != "admin") return <div>нет доступа</div>
+    if(auth.role != "ADMIN") return <div>нет доступа</div>
     return (
         <>
             <EditList cars={props.cars}/>

@@ -29,7 +29,7 @@ const Login: NextPage = (props: any) => {
                 <br/>
                 <input type="password" name="password" value={password} onChange={e => setPassword(e.target.value)}/>
                 <br/>
-                <input type="button" value="войти" onClick={submitForm}/>
+                <input type="button" value="Войти" onClick={submitForm}/>
             </form>
         </>
     )

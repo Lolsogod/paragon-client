@@ -24,7 +24,7 @@ const Register: NextPage = (props: any) => {
                 <br/>
                 <input type="password" name="password" value={password} onChange={e => setPassword(e.target.value)}/>
                 <br/>
-                <input type="button" value="зарегатся" onClick={submitForm}/>
+                <input type="button" value="Зарегистрироваться" onClick={submitForm}/>
             </form>
         </>
     )

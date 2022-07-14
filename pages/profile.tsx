@@ -32,8 +32,8 @@ const Profile: NextPage = (props: any) => {
                 <title>Профиль</title>
             </Head>
             <UserInfo
-                name={user.name}
                 surname={user.surname}
+                name={user.name}
                 patronymic={user.patronymic}
             />
             {cars && <CarList cars={cars}/>}

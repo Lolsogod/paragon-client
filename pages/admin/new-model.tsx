@@ -16,7 +16,7 @@ const NewModel = (props: any)=>{
                 .then(res => setBrands(res.data))
         }
     },[auth.token])
-    if(auth.role != "admin") return <div>нет доступа</div>
+    if(auth.role != "ADMIN") return <div>нет доступа</div>
     return( <div>
         <AddModel brands={brands}/>
     </div>)
