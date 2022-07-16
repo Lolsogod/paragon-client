@@ -4,26 +4,22 @@ import Head from 'next/head'
 import CarList from "../components/CarList";
 import {GetStaticProps} from "next";
 import axios from "axios";
-import {useContext, useEffect, useState} from "react";
-import {AuthContext} from "../context/AuthContext";
+import {Car} from "../interfaces/interfaces";
 
-
-const Home: NextPage = (props:any) => {
-    const auth = useContext(AuthContext)
-    const [cars, setCars] = useState(props.cars)
+const Home: NextPage<{cars: Car[]}> = (props) => {
   return (
       <>
           <Head>
               <title>Home</title>
           </Head>
-          <CarList cars={cars}/>
+          <CarList cars={props.cars}/>
       </>
   )
 
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-    let cars: any[]=[];
+    let cars: Car[]=[];
 
     await axios.get('http://localhost:8080/cars/')
         .then(res => cars = res.data)

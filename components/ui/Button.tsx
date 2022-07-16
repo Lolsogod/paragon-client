@@ -1,9 +1,9 @@
 import classes from './Button.module.css';
 import Link from "next/link";
+import React, {FC} from "react";
 
-const Button = (props: any) => {
+const Button: FC<{href?: string, onClick?: ()=> void, children: React.ReactNode}> = (props) => {
     if (props.href){
-
         return <Link href={`${props.href}`}>
             <a className={classes.btn}>{props.children}</a>
         </Link>;

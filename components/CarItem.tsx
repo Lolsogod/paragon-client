@@ -1,16 +1,17 @@
 import Card from "./ui/Card";
 import classes from './CarItem.module.css'
-import Link from "next/link";
 import Image from "next/image"
 import sampleCar from "../public/sample_car.jpg"
 import Button from "./ui/Button";
+import {FC} from "react";
+import {Car} from "../interfaces/interfaces";
 
-const CarItem = (props: any) => {
+const CarItem: FC<Car> = (props) => {
     return(
         <li className={classes.item}>
             <Card>
                 <div className={classes.image}>
-                    <Image src={sampleCar}></Image>
+                    <Image src={sampleCar} alt='car'/>
                 </div>
                 <div className={classes.content}>
                     <span className={classes.title}>{props.brand.brand} {props.model.model} </span>

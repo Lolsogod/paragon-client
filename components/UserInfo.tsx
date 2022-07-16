@@ -1,9 +1,7 @@
-import Button from "./ui/Button";
-import axios from "axios";
-import {useContext} from "react";
-import {AuthContext} from "../context/AuthContext";
+import {FC} from "react";
+import {User} from "../interfaces/interfaces";
 
-const UserInfo = (props: any) =>{
+const UserInfo: FC<User> = (props) =>{
     return(
         <>
             <h1>{props.surname} {props.name} {props.patronymic}</h1>

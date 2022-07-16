@@ -1,18 +1,19 @@
 import {NextPage} from "next";
 import Head from "next/head";
-import {useState} from "react";
+import {ChangeEvent, useState} from "react";
 import axios from "axios";
 import Button from "../components/ui/Button";
 import classes from "../components/Auth.module.css"
+import {User} from "../interfaces/interfaces";
 
 
 const Register: NextPage = () => {
 
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<User & {username: string, password: string}>({
         username:'', password: '', name: '', surname: '', patronymic: ''
     })
 
-    const changeHandler = (event: any) => {
+    const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setForm({...form, [event.target.name]: event.target.value})
     }
 

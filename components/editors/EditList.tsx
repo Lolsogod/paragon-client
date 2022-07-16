@@ -1,13 +1,14 @@
 import classes from "../CarList.module.css"
 import EditItem from "./EditItem";
-import {useContext, useEffect, useState} from "react";
+import {FC, useContext, useEffect, useState} from "react";
 import axios from "axios";
 import {AuthContext} from "../../context/AuthContext";
 import Button from "../ui/Button";
+import {AuthCtx, Brand, Car} from "../../interfaces/interfaces";
 
-const EditList = (props: any) =>{
-    const auth = useContext(AuthContext)
-    const [brands, setBrands] = useState<any[]>([])
+const EditList: FC<{cars: Car[]}> = (props) =>{
+    const auth = useContext<AuthCtx>(AuthContext)
+    const [brands, setBrands] = useState<Brand[]>([])
     useEffect(()=>{
         if(!!auth.token){
             axios.get('/api/cars/brand',
@@ -26,12 +27,12 @@ const EditList = (props: any) =>{
                     <EditItem
                         brands={brands}
                         key={car.id}
-                id={car.id}
-                year={car.year}
-                brand={car.brand}
-                model={car.model}
-                price={car.price}
-                condition={car.condition}
+                        id={car.id}
+                        year={car.year}
+                        brand={car.brand}
+                        model={car.model}
+                        price={car.price}
+                        condition={car.condition}
     />
 ))}
     </ul>

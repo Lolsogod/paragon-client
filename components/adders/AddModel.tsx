@@ -1,10 +1,11 @@
 import Button from "../ui/Button";
 import axios from "axios";
-import {useContext, useState} from "react";
+import {ChangeEvent, FC, useContext, useState} from "react";
 import {AuthContext} from "../../context/AuthContext";
+import {AuthCtx, Brand} from "../../interfaces/interfaces";
 
-const AddModel = (props: any) =>{
-    const auth = useContext(AuthContext)
+const AddModel: FC<{brands: Brand[]}> = (props) =>{
+    const auth = useContext<AuthCtx>(AuthContext)
     const [model, setModel] = useState<string>('')
     const [brand, setBrand] = useState<string>('')
     const send = ()=>{
@@ -12,10 +13,10 @@ const AddModel = (props: any) =>{
             {headers: {Authorization: `Bearer ${auth.token}`}})
             .then(res=>console.log(res))
     }
-    const changeHandler = (event: any) =>{
+    const changeHandler = (event: ChangeEvent<HTMLInputElement>) =>{
         setModel(event.target.value)
     }
-    const brandChange = (event: any) =>{
+    const brandChange = (event: ChangeEvent<HTMLSelectElement>) =>{
         setBrand(event.target.value)
     }
 

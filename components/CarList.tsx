@@ -1,8 +1,9 @@
 import CarItem from "./CarItem";
 import classes from  "./CarList.module.css"
-import EditItem from "./editors/EditItem";
+import {FC} from "react";
+import {Car} from "../interfaces/interfaces";
 
-const CarList = (props: any) =>{
+const CarList: FC<{cars: Car[]}> = (props) =>{
     return(
         <ul className={classes.list}>
             {props.cars.map((car: any) => (

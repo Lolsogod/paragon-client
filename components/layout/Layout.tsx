@@ -1,7 +1,8 @@
 import MainNavigation from './MainNavigation';
 import classes from './Layout.module.css';
+import React, {FC} from "react";
 
-function Layout(props: any) {
+const Layout: FC<{isAuthenticated: boolean, role: string, children: React.ReactNode}> = (props) =>{
   return (
     <div>
       <MainNavigation isAuthenticated={props.isAuthenticated} role={props.role}/>

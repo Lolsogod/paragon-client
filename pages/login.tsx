@@ -16,7 +16,6 @@ const Login: NextPage = () => {
     const submitForm = async () =>{
         await axios.post("http://localhost:8081/auth/token",
             {username, password})
-            // @ts-ignore
             .then(res => auth.login(res.data.token))
         await router.push("/")
     }

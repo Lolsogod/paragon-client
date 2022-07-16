@@ -1,24 +1,20 @@
 import {GetStaticProps, NextPage} from "next";
-import Link from "next/link";
 import axios from "axios";
-import CarList from "../../components/CarList";
-import EditList from "../../components/editors/EditList";
 import AddCar from "../../components/adders/AddCar";
 import {useContext} from "react";
 import {AuthContext} from "../../context/AuthContext";
+import {AuthCtx, Car} from "../../interfaces/interfaces";
 
-const Admin: NextPage = (props: any) => {
-    const auth = useContext(AuthContext)
+const Admin: NextPage = () => {
+    const auth = useContext<AuthCtx>(AuthContext)
     if(auth.role != "ADMIN") return <div>нет доступа</div>
     return (
-        <>
-            <AddCar cars={props.cars}/>
-        </>
+            <AddCar/>
     )
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-    let cars: any[]=[];
+    let cars: Car[]=[];
 
     await axios.get('http://localhost:8080/cars/')
         .then(res => cars = res.data)

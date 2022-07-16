@@ -1,13 +1,14 @@
-import AddBrand from "../../components/adders/AddBrand";
 import AddModel from "../../components/adders/AddModel";
 import {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../../context/AuthContext";
 import axios from "axios";
+import {NextPage} from "next";
+import {Brand} from "../../interfaces/interfaces";
 
 
-const NewModel = (props: any)=>{
+const NewModel: NextPage = ()=>{
     const auth = useContext(AuthContext)
-    const [brands, setBrands] = useState<any[]>([])
+    const [brands, setBrands] = useState<Brand[]>([])
 
     useEffect(()=>{
         if(!!auth.token){

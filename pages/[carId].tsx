@@ -1,16 +1,13 @@
-import type {GetStaticPaths, NextPage} from 'next'
-import {useRouter} from 'next/router'
+import type {GetStaticPaths, GetStaticProps, NextPage} from 'next'
 import Head from 'next/head'
 import CarDetail from "../components/CarDetail";
-import {GetStaticProps} from "next";
 import axios from "axios";
+import {Car, CarPaths} from "../interfaces/interfaces";
 
 
 
-const CarId: NextPage = (props: any) => {
-    const router = useRouter();
-    const carId = router.query.carId;
 
+const CarId: NextPage<{carInfo: Car}> = (props) => {
     return (
         <div>
             <Head>
@@ -20,27 +17,24 @@ const CarId: NextPage = (props: any) => {
         </div>
     )
 }
-export const getStaticProps: GetStaticProps = async (context: any) => {
-    let car;
-    await axios.get(`http://localhost:8080/cars/${context.params.carId}`)
-        .then(res => car = res.data)
-    console.log(car)
+
+export const getStaticProps: GetStaticProps = async (context)=> {
+    let car: Car | null = null;
+    if(context.params != undefined)
+        await axios.get(`http://localhost:8080/cars/${context.params.carId}`)
+            .then(res => car = res.data)
     return{
-        props:{
-            // @ts-ignore
-            carInfo: car
-        },
+        props:{carInfo: car},
         revalidate: 1
     }
 }
-export const getStaticPaths: GetStaticPaths = async () => {
-    let ids: any[] = [];
+export const getStaticPaths: GetStaticPaths = async (): Promise<CarPaths> => {
+    let ids: number[] = [];
     await axios.get(`http://localhost:8080/cars/allIds`)
         .then(res => {
             ids = res.data
-            console.log(res.data)
         })
-    console.log(ids.map(id => ({params: {carId: id}})))
+
     return {
         paths: ids.map(id => ({params: {carId: id.toString()}})),
         fallback: false

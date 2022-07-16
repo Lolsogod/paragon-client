@@ -1,34 +1,30 @@
 import Card from "../ui/Card";
 import classes from './EditItem.module.css'
-import Link from "next/link";
 import Image from "next/image"
 import sampleCar from "../../public/sample_car.jpg"
 import Button from "../ui/Button";
-import {useContext, useEffect, useState} from "react";
+import {ChangeEvent, FC, useContext, useEffect, useState} from "react";
 import axios from "axios";
 import {AuthContext} from "../../context/AuthContext";
+import {AddCarResponse, AuthCtx, ItemProps, Model} from "../../interfaces/interfaces";
 
-const EditItem = (props: any) => {
-    const auth = useContext(AuthContext)
-    const [form, setForm] = useState({
+const EditItem: FC<ItemProps> = (props) => {
+    const auth = useContext<AuthCtx>(AuthContext)
+    const [form, setForm] = useState<AddCarResponse>({
         brand_id: props.brand.id, model_id: props.model.id,
         year: props.year, price: props.price, condition: props.condition
     })
 
-    const changeHandler = (event: any) => {
+    const changeHandler = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setForm({...form, [event.target.name]: event.target.value})
     }
-    //TODO: поднять выше но попозже
 
-    const [models, setModels] = useState<any[]>([])
-
+    const [models, setModels] = useState<Model[]>([])
     useEffect(()=>{
         if(!!auth.token && !!form.brand_id){
             axios.get(`/api/cars/model?brand_id=${form.brand_id}`,
                 {headers: {Authorization: `Bearer ${auth.token}`}})
-                .then(res => {
-                    setModels(res.data)
-                })
+                .then(res => setModels(res.data))
         }
     },[auth.token, form.brand_id])
 
@@ -41,14 +37,14 @@ const EditItem = (props: any) => {
     const deleteHandler = () =>{
         axios.post(`/api/cars/delete/${props.id}`,{},
             {headers: {Authorization: `Bearer ${auth.token}`}})
-            .then(res => alert("deleted!"))
+            .then(() => alert("deleted!"))
     }
 
     return(
         <li className={classes.item}>
             <Card>
                 <div className={classes.image}>
-                    <Image src={sampleCar}></Image>
+                    <Image src={sampleCar} alt='car'/>
                 </div>
                 <div className={classes.content}>
                     <div className={classes.flex}>

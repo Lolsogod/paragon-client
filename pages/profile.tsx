@@ -5,14 +5,14 @@ import {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../context/AuthContext";
 import axios from "axios";
 import CarList from "../components/CarList";
-import {ScriptProps} from "next/script";
+import {AuthCtx, Car, User} from "../interfaces/interfaces";
 
 const Profile: NextPage = () => {
-    const auth = useContext(AuthContext)
-    const [user, setUser] = useState({
+    const auth = useContext<AuthCtx>(AuthContext)
+    const [user, setUser] = useState<User>({
         name: '', surname: '', patronymic:''
     })
-    const [cars, setCars] = useState()
+    const [cars, setCars] = useState<Car[]>()
     useEffect(()=>{
         if(auth.token){
             axios.get('/api/account',

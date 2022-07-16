@@ -1,9 +1,10 @@
-import {useContext} from "react";
+import {FC, useContext} from "react";
 import {AuthContext} from "../context/AuthContext";
+import {AuthCtx} from "../interfaces/interfaces";
 
 
-function LogOut() {
-    const auth = useContext(AuthContext)
+const LogOut: FC = () => {
+    const auth = useContext<AuthCtx>(AuthContext)
     const logOut = () =>{
         auth.logout()
         window.location.reload()

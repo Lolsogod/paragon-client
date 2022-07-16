@@ -1,31 +1,34 @@
 import classes from "../CarList.module.css";
-import EditItem from "../editors/EditItem";
-import {useContext, useEffect, useState} from "react";
-import {AuthContext} from "../../context/AuthContext";
+import { FC, useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import AddItem from "./AddItem";
+import { AuthCtx, Brand } from "../../interfaces/interfaces";
 
-const AddCar = (props: any) => {
-    const auth = useContext(AuthContext)
-    const [brands, setBrands] = useState<any[]>([])
-    useEffect(()=>{
-        if(!!auth.token){
-            axios.get('/api/cars/brand',
-                {headers: {Authorization: `Bearer ${auth.token}`}})
-                .then(res => setBrands(res.data))
-        }
-    },[auth.token])
-    return(
-        <ul className={classes.list}>
-                <AddItem
-                    brands={brands}
-                    year={''}
-                    brand={''}
-                    model={''}
-                    price={''}
-                    condition={''}
-                />
-                </ul>
-    )
-}
-export default AddCar
+const AddCar: FC = () => {
+  const auth = useContext<AuthCtx>(AuthContext);
+  const [brands, setBrands] = useState<Brand[]>([]);
+
+  useEffect(() => {
+    if (!!auth.token) {
+      axios.get("/api/cars/brand",
+          {headers: { Authorization: `Bearer ${auth.token}`},})
+        .then(res => setBrands(res.data))
+        .catch(e => console.log(e));
+    }
+  }, [auth.token]);
+
+  return (
+    <ul className={classes.list}>
+      <AddItem
+        brands={brands}
+        year={0}
+        brand={{id: 0, brand:""}}
+        model={{id: 0, model: "", brand: {id: 0, brand:""}}}
+        price={0}
+        condition={""}
+      />
+    </ul>
+  );
+};
+export default AddCar;

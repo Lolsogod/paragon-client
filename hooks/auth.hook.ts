@@ -1,50 +1,41 @@
 import {useState, useCallback, useEffect} from 'react';
+import {ParsedJwt} from "../interfaces/interfaces";
 
 const storageName: string = "userData"
 export const useAuth = () =>{
-    const [token, setToken] = useState(null);
-    const [ready, setReady] = useState(false)
-    const [role, setRole] = useState(null);
-    const [userId, setUserId] = useState(null)
-    const [email, setEmail] = useState(null);
+    const [token, setToken] = useState<string>('');
+    const [ready, setReady] = useState<boolean>(false)
+    const [role, setRole] = useState<string>('');
 
-    const parseJwt = (token: any) => {
+    const parseJwt = (token: string): ParsedJwt | void => {
         if (!token) { return; }
         const base64Url = token.split('.')[1];
         const base64 = base64Url.replace('-', '+').replace('_', '/');
         return JSON.parse(window.atob(base64));
     }
 
-    const login = useCallback((jwtToken: any) => {
+    const login = useCallback((jwtToken: string) => {
         setToken(jwtToken);
         const parsed = parseJwt(jwtToken);
-        console.log(parsed)
-        setRole(parsed.role);
-        /*setUserId(parsed.jti);
-        setEmail(parsed.sub);*/
-
+        if (parsed) setRole(parsed.role);
         localStorage.setItem(storageName, JSON.stringify({
             token: jwtToken
         }));
     }, [])
 
     const logout = useCallback(() => {
-        setToken(null);
-        setRole(null);
-        setUserId(null);
-        setEmail(null);
-
+        setToken('');
+        setRole('');
         localStorage.removeItem(storageName);
     }, [])
 
     useEffect(()=>{
-        // @ts-ignore
-        const data = JSON.parse(localStorage.getItem(storageName));
-        if(data && data.token){
+        const data: {token:string} = JSON.parse(localStorage.getItem(storageName) || '{}');
+        if(data && data.token)
             login(data.token)
-        }
+
         setReady(true)
     }, [login])
 
-    return {login, logout, token, role, userId,email, ready}
+    return {login, logout, token, role, ready}
 }
