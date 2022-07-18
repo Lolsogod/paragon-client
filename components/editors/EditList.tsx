@@ -33,6 +33,7 @@ const EditList: FC<{cars: Car[]}> = (props) =>{
                         model={car.model}
                         price={car.price}
                         condition={car.condition}
+                        img_url={car.img_url}
     />
 ))}
     </ul>

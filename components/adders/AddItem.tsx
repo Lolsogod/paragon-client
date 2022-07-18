@@ -14,7 +14,8 @@ const AddItem: FC<ItemProps> = (props) => {
     const auth = useContext<AuthCtx>(AuthContext)
     const [form, setForm] = useState<AddCarResponse>({
         brand_id: props.brand.id, model_id: props.model.id,
-        year: props.year, price: props.price, condition: props.condition
+        year: props.year, price: props.price, condition: props.condition,
+        img_url: props.img_url
     })
 
     const changeHandler = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -42,7 +43,8 @@ const AddItem: FC<ItemProps> = (props) => {
         <li className={classes.item}>
             <Card>
                 <div className={classes.image}>
-                    <Image src={sampleCar} alt='car'/>
+                    {form.img_url?<img src={form.img_url} alt="car"/>:
+                    <Image src={sampleCar} alt='car'/>}
                 </div>
                 <div className={classes.content}>
                     <div className={classes.flex}>
@@ -67,6 +69,8 @@ const AddItem: FC<ItemProps> = (props) => {
                             <option  value='NEW'>NEW</option>
                             <option  value='USED'>USED</option>
                         </select>
+                        <input type="text" value={form.img_url}
+                               onChange={changeHandler} name='img_url' id='img_url'/>
                     </div>
                 </div>
                 <div className={classes.actions}>

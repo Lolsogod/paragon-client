@@ -7,7 +7,8 @@ import axios from "axios";
 import {Car} from "../interfaces/interfaces";
 
 const Home: NextPage<{cars: Car[]}> = (props) => {
-  return (
+  console.log(props.cars)
+    return (
       <>
           <Head>
               <title>Home</title>
@@ -15,7 +16,6 @@ const Home: NextPage<{cars: Car[]}> = (props) => {
           <CarList cars={props.cars}/>
       </>
   )
-
 }
 
 export const getStaticProps: GetStaticProps = async () => {

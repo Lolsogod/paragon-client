@@ -1,8 +1,6 @@
 {
   "compilerOptions": {
-    "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "noUnusedLocals": true,
     "target": "ES2016",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,

@@ -14,6 +14,7 @@ const MainNavigation: FC<{isAuthenticated: boolean, role: string}> = (props) => 
       <nav>
         <ul>
             <>
+                <li><Link href="/sto">СТО</Link></li>
             {!props.isAuthenticated && <>
                 <li><Link href='/login'>ВОЙТИ</Link></li>
             <li><Link href='/register'>РЕГИСТРАЦИЯ</Link></li>

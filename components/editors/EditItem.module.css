@@ -52,6 +52,12 @@
     gap: .5rem;
     margin-bottom: .7rem;
 }
+.flexCenter{
+    display: flex;
+    gap: .5rem;
+    margin-bottom: .7rem;
+    align-items: center;
+}
 .flex .price{
     width: 6rem;
 }

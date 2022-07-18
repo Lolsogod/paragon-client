@@ -27,6 +27,7 @@ const AddCar: FC = () => {
         model={{id: 0, model: "", brand: {id: 0, brand:""}}}
         price={0}
         condition={""}
+        img_url={""}
       />
     </ul>
   );

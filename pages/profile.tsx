@@ -37,7 +37,7 @@ const Profile: NextPage = () => {
                 name={user.name}
                 patronymic={user.patronymic}
             />
-            {cars && <CarList cars={cars}/>}
+            {cars && <CarList cars={cars} own={true}/>}
         </div>
     )
 }
