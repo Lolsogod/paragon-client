@@ -30,8 +30,9 @@ const NewPart = ()=>{
     }, [auth.token]);
 
     const {checkRole, PushBack} = useAuthCheck()
-    if (checkRole("WORKER")) return <PushBack/>
+    if (checkRole("ADMIN")) return <PushBack/>
     return( <div>
+        <h2>Добавить новую деталь</h2>
         <AddPart brands={brands} types={types}/>
     </div>)
 }

@@ -5,8 +5,9 @@ import {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../context/AuthContext";
 import axios from "axios";
 import CarList from "../components/CarList";
-import {AuthCtx, Car, User} from "../interfaces/interfaces";
+import {AuthCtx, Car, RepairOrder, User} from "../interfaces/interfaces";
 import {useAuthCheck} from "../hooks/auth.check.hook";
+import RepairOrderList from "../components/sto/RepairOrderList";
 
 const Profile: NextPage = () => {
     const auth = useContext<AuthCtx>(AuthContext)
@@ -29,6 +30,24 @@ const Profile: NextPage = () => {
                 .then(res => setCars(res.data))
         }
     }, [auth.token])
+    //заказы
+    const [pendingOrders, setPendingOrders] = useState<RepairOrder[]>([])
+    useEffect(()=>{
+        if(!!auth.token){
+            axios.get('/api/account/repairOrders',
+                {headers: {Authorization: `Bearer ${auth.token}`}})
+                .then(res => setPendingOrders(res.data))
+        }
+    },[auth.token])
+    //завершённые
+    const [finishedOrders, setFinishedOrders] = useState<RepairOrder[]>([])
+    useEffect(()=>{
+        if(!!auth.token){
+            axios.get('/api/account/finishedRepairOrders',
+                {headers: {Authorization: `Bearer ${auth.token}`}})
+                .then(res => setFinishedOrders(res.data))
+        }
+    },[auth.token])
     const {checkAuth, PushBack} = useAuthCheck()
     if (!checkAuth()) return <PushBack/>
     return (
@@ -53,8 +72,13 @@ const Profile: NextPage = () => {
                 <option value="1">В процессе</option>
                 <option value="2">Завершённые</option>
             </select>
-            {order=="1" && <div>Нет заказов</div>}
-            {order=="2" && <div>Нет заказов</div>}
+            {/*нет заказов добавь*/}
+            {order=="1" &&
+                <RepairOrderList orders={pendingOrders}/>
+            }
+            {order=="2" &&
+                <RepairOrderList orders={finishedOrders}/>
+            }
         </div>
     )
 }

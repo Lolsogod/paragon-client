@@ -6,7 +6,7 @@ import {useAuthCheck} from "../../hooks/auth.check.hook";
 
 const NewWorkType = ()=>{
     const {checkRole, PushBack} = useAuthCheck()
-    if (checkRole("WORKER")) return <PushBack/>
+    if (checkRole("ADMIN")) return <PushBack/>
     return( <div>
         <AddType tt="works" />
     </div>)

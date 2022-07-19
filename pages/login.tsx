@@ -41,7 +41,7 @@ const Login: NextPage = () => {
                                onChange={e => setPassword(e.target.value)} className={classes.textField__input}/>
                         <label className={classes.textField__label} htmlFor="username">Пароль</label>
                     </div>
-                    <Button onClick={submitForm}>Войти</Button>
+                    <Button onClick={submitForm} btnType={"reg"}>Войти</Button>
                 </form>
             </div>
         </>

@@ -32,7 +32,8 @@ const AddPart: FC<{brands: Brand[], types: PartType[]} > = (props) =>{
             .then(res => console.log(res))
     }
     return(
-       <>
+
+       <div className={classes.flexCenter}>
            <input type="text" placeholder="Введите имя"
                   onChange={changeHandler} value={partRequest?.name} name='name'/>
            <select value={partRequest.brand} onChange={changeHandler} id="brand" name="brand">
@@ -53,7 +54,7 @@ const AddPart: FC<{brands: Brand[], types: PartType[]} > = (props) =>{
                    return(<option key={index} value={ty.id}>{ty.name}</option>)})}
            </select>
            <Button onClick={addHandler}>Добавить</Button>
-       </>
+       </div>
     )
 }
 export default AddPart

@@ -1,0 +1,13 @@
+.flex{
+    display: flex;
+    gap:3rem
+}
+.image{
+    height: 25rem;
+    overflow: hidden;
+    border-radius: 1rem;
+}
+.image img{
+    height: 25rem;
+    max-width: 60rem;
+}

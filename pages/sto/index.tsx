@@ -15,15 +15,10 @@ const StoMain: NextPage = () => {
     return (
         <>
             <div className={classes.adders}>
-                <Button href='/sto/new-type'>Добавить тип детали</Button>
-                <Button href='/sto/new-part'>Добавить деталь</Button>
-                <Button href='/sto/new-work-type'>Добавить тип работы</Button>
-            </div>
-            <br/>
-            <div className={classes.adders}>
                 <Button href='/sto/parts'>Список деталей</Button>
                 <Button href='/sto/repair'>Заказы на ремонт</Button>
             </div>
+
         </>
     )
 }

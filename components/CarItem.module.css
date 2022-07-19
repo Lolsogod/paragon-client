@@ -49,3 +49,8 @@
 .price{
     font-size: 1.3rem;
 }
+.condition{
+    color: gray;
+    font-weight: bold;
+    font-size: .80rem;
+}

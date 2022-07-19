@@ -12,8 +12,10 @@ const PartItem: FC<Part> = (props) => {
                 <div className={classes.image}>
                     <Image src={samplePart} alt='part'/>
                 </div>
+                {/*TODO: кривокосо*/}
                 <div className={classes.content}>
                     <span className={classes.title}>{props.name} </span>
+                    <br/>
                      на складе: {props.count}
                     <br/>
                     <span className={classes.price}>{props.price}</span> руб

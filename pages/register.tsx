@@ -60,7 +60,7 @@ const Register: NextPage = () => {
                         <label className={classes.textField__label} htmlFor="username">Отчество</label>
                     </div>
                     <br/>
-                    <Button onClick={submitForm}>Зарегистрироваться</Button>
+                    <Button onClick={submitForm} btnType={"reg"}>Зарегистрироваться</Button>
                 </form>
             </div>
         </>

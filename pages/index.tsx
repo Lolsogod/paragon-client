@@ -13,6 +13,12 @@ const Home: NextPage<{cars: Car[]}> = (props) => {
       <>
           <Head>
               <title>Home</title>
+              <meta name="title" content="Paragon"/>
+              <meta name="description" content="Авто дилер и СТО с выгодными ценами."/>
+              <meta name="keywords" content="Машина,  авто-дилер, дилер, авто, автомобиль, купит, ремонт автомобилей, сто, сервис технического обслуживания"/>
+              <meta name="robots" content="index, follow"/>
+              <meta httpEquiv="Content-Type" content="text/html; charset=utf-8"/>
+              <meta name="language" content="Russian"/>
           </Head>
           <CarList cars={props.cars}/>
       </>

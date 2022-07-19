@@ -5,6 +5,7 @@ import sampleCar from "../public/sample_car.jpg"
 import Button from "./ui/Button";
 import {FC} from "react";
 import {Car} from "../interfaces/interfaces";
+import getRuCondition from "../hooks/condition.hook";
 
 const CarItem: FC<Car> = (props) => {
     console.log(props.img_url)
@@ -17,14 +18,14 @@ const CarItem: FC<Car> = (props) => {
                 </div>
                 <div className={classes.content}>
                     <span className={classes.title}>{props.brand.brand} {props.model.model} </span>
-                    {props.year} {props.condition}
+                    {props.year} <span className={classes.condition}>{getRuCondition(props.condition)}</span>
                     <br/>
                     <span className={classes.price}>{props.price}</span> руб
                 </div>
                 <div className={classes.actions}>
                      <Button href={`${props.id}`}>Инфо</Button>
                     <br/><br/>
-                    {props.own && <Button href={`/sto/repair/request/${props.id}`}>ремонт</Button>}
+                    {props.own && <Button href={`/sto/repair/request/${props.id}`}>Ремонт</Button>}
                 </div>
             </Card>
         </li>

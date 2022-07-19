@@ -6,6 +6,7 @@ import axios from "axios";
 import {useRouter} from "next/router";
 import Button from "../../../../components/ui/Button";
 import {useAuthCheck} from "../../../../hooks/auth.check.hook";
+import classes from "../../../../components/editors/EditItem.module.css";
 
 const AddWork = () =>{
     const { query } = useRouter()
@@ -39,12 +40,13 @@ const AddWork = () =>{
     return(
         <div>
             <h1>Работа</h1>
+            <div className={classes.flexCenter}>
             <input type="text" placeholder="Введите описание"
                    onChange={changeHandler} value={work.description} name='description'/>
             <input type="number" placeholder="Введите цену"
-                   onChange={changeHandler} value={work.work_price} name='work_price'/>
-            <br/>
+                   onChange={changeHandler} value={work.work_price} name='work_price'/></div>
             Детали для работы
+            <br/><br/>
             <PartRequestList types={types} repair={true} work={work} setWork={setWork}/>
             <Button onClick={addHandler}>Добвить</Button>
         </div>

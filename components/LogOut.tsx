@@ -7,12 +7,13 @@ import {useRouter} from "next/router";
 const LogOut: FC = () => {
     const router = useRouter();
     const auth = useContext<AuthCtx>(AuthContext)
-    const logOut = () =>{
+    const logOut = (event: any) =>{
+        event.preventDefault()
         auth.logout()
         router.push("/")
     }
     return(
-        <a onClick={logOut}>ВЫЙТИ</a>
+        <a href={"/"} onClick={e=> logOut(e)}>ВЫЙТИ</a>
     )
 }
 

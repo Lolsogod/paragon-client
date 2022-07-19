@@ -6,6 +6,9 @@
   justify-content: space-between;
   background-color: #5D5C61;
   padding: 0 10%;
+  position: sticky;
+  top: 0;
+  z-index: 3;
 }
 
 .logo a{

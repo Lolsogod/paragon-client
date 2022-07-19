@@ -22,6 +22,12 @@ const EditList: FC<{cars: Car[]}> = (props) =>{
                 <Button href='/admin/new-model'>Добавить модель</Button>
                 <Button href='/admin/new-car'>Добавить машину</Button>
             </div>
+            <br/>
+            <div className={classes.adders}>
+                <Button href='/sto/new-type'>Добавить тип детали</Button>
+                <Button href='/sto/new-part'>Добавить деталь</Button>
+                <Button href='/sto/new-work-type'>Добавить тип работы</Button>
+            </div>
         <ul className={classes.list}>
             {props.cars.map((car: any) => (
                     <EditItem
