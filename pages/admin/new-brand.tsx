@@ -2,10 +2,11 @@ import AddBrand from "../../components/adders/AddBrand";
 import {useContext} from "react";
 import {AuthContext} from "../../context/AuthContext";
 import {AuthCtx} from "../../interfaces/interfaces";
+import {useAuthCheck} from "../../hooks/auth.check.hook";
 
 const NewBrand = ()=>{
-    const auth = useContext<AuthCtx>(AuthContext)
-    if(auth.role != "ADMIN") return <div>нет доступа</div>
+    const {checkRole, PushBack} = useAuthCheck()
+    if (checkRole("ADMIN")) return <PushBack/>
     return( <div>
         <AddBrand/>
     </div>)

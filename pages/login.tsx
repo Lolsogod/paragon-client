@@ -6,6 +6,7 @@ import router from "next/router";
 import {AuthContext} from "../context/AuthContext";
 import classes from "../components/Auth.module.css"
 import Button from "../components/ui/Button";
+import {useAuthCheck} from "../hooks/auth.check.hook";
 
 
 const Login: NextPage = () => {
@@ -19,6 +20,9 @@ const Login: NextPage = () => {
             .then(res => auth.login(res.data.token))
         await router.push("/")
     }
+
+    const {checkAuth, PushBack} = useAuthCheck()
+    if (checkAuth()) return <PushBack/>
     return (
         <>
             <div className={classes.formCont}>
@@ -27,11 +31,16 @@ const Login: NextPage = () => {
                 </Head>
                 <h1>Вход</h1>
                 <form>
-                    <label htmlFor="username">Логин</label>
-                    <input type="text" name="username" value={username} onChange={e => setUsername(e.target.value)}/>
-                    <label htmlFor="password">Пароль</label>
-                    <input type="password" name="password" value={password} onChange={e => setPassword(e.target.value)}/>
-                    <br/><br/>
+                    <div className={`${classes.textField} ${classes.textField_floating}`}>
+                        <input type="text" name="username" value={username} placeholder={"a"}
+                               onChange={e => setUsername(e.target.value)} className={classes.textField__input}/>
+                        <label className={classes.textField__label} htmlFor="username">Логин</label>
+                    </div>
+                    <div className={`${classes.textField} ${classes.textField_floating}`}>
+                        <input type="password" name="password" value={password} placeholder={"a"}
+                               onChange={e => setPassword(e.target.value)} className={classes.textField__input}/>
+                        <label className={classes.textField__label} htmlFor="username">Пароль</label>
+                    </div>
                     <Button onClick={submitForm}>Войти</Button>
                 </form>
             </div>

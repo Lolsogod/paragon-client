@@ -21,7 +21,7 @@ const CarId: NextPage<{carInfo: Car}> = (props) => {
 export const getStaticProps: GetStaticProps = async (context)=> {
     let car: Car | null = null;
     if(context.params != undefined)
-        await axios.get(`http://localhost:8080/cars/${context.params.carId}`)
+        await axios.get(`http://localhost:8080/cars/getCarById?id=${context.params.carId}`)
             .then(res => car = res.data)
     return{
         props:{carInfo: car},

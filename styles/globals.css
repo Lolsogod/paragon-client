@@ -20,3 +20,6 @@ label{
 input, select{
   padding: .3rem .5rem;
 }
+textarea:focus, input:focus{
+  outline: none;
+}

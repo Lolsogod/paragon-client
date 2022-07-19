@@ -13,11 +13,17 @@ const CarDetail: FC<{carInfo: Car}> = (props) =>{
     }
     return(
         <>
+
             <h1>{props.carInfo.brand.brand} {props.carInfo.model.model}</h1>
             <h2>Год: {props.carInfo.year}</h2>
             <h2>Состояние: {props.carInfo.condition}</h2>
             <h2>Цена: {props.carInfo.price}</h2>
-            {!props.carInfo.sold && <Button onClick={makeOrder}>Купить</Button>}
+            {auth.isAuthenticated && !props.carInfo.sold &&
+                <Button onClick={makeOrder}>Купить</Button>}
+            {!auth.isAuthenticated &&  !props.carInfo.sold &&
+                <>
+                    <h4>Для совершения покупок необходимо войти в систему</h4>
+                </>}
         </>
     )
 }

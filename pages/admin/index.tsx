@@ -4,10 +4,11 @@ import EditList from "../../components/editors/EditList";
 import {useContext} from "react";
 import {AuthContext} from "../../context/AuthContext";
 import {AuthCtx, Car} from "../../interfaces/interfaces";
+import {useAuthCheck} from "../../hooks/auth.check.hook";
 
 const Admin: NextPage<{cars: Car[]}> = (props) => {
-    const auth = useContext<AuthCtx>(AuthContext)
-    if(auth.role != "ADMIN") return <div>нет доступа</div>
+    const {checkRole, PushBack} = useAuthCheck()
+    if (checkRole("ADMIN")) return <PushBack/>
     return (
         <>
             <EditList cars={props.cars}/>

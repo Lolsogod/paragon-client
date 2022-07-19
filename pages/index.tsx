@@ -5,9 +5,10 @@ import CarList from "../components/CarList";
 import {GetStaticProps} from "next";
 import axios from "axios";
 import {Car} from "../interfaces/interfaces";
+import {useAuthCheck} from "../hooks/auth.check.hook";
 
 const Home: NextPage<{cars: Car[]}> = (props) => {
-  console.log(props.cars)
+
     return (
       <>
           <Head>

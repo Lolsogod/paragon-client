@@ -5,6 +5,7 @@ import {AuthCtx, RepairOrder} from "../../../interfaces/interfaces";
 import {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../../../context/AuthContext";
 import RepairOrderList from "../../../components/sto/RepairOrderList";
+import {useAuthCheck} from "../../../hooks/auth.check.hook";
 
 
 const RepairOrders: NextPage = () => {
@@ -18,7 +19,8 @@ const RepairOrders: NextPage = () => {
                 .then(res => setRepairOrders(res.data))
         }
     },[auth.token])
-
+    const {checkRole, PushBack} = useAuthCheck()
+    if (checkRole("WORKER")) return <PushBack/>
     return (
         <>
             <Head>

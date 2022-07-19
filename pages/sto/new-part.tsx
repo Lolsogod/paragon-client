@@ -3,6 +3,7 @@ import {AuthContext} from "../../context/AuthContext";
 import {AuthCtx, Brand, PartType} from "../../interfaces/interfaces";
 import AddPart from "../../components/adders/AddPart";
 import axios from "axios";
+import {useAuthCheck} from "../../hooks/auth.check.hook";
 
 const NewPart = ()=>{
     const auth = useContext<AuthCtx>(AuthContext)
@@ -28,7 +29,8 @@ const NewPart = ()=>{
         }
     }, [auth.token]);
 
-    if(auth.role != "ADMIN") return <div>нет доступа</div>
+    const {checkRole, PushBack} = useAuthCheck()
+    if (checkRole("WORKER")) return <PushBack/>
     return( <div>
         <AddPart brands={brands} types={types}/>
     </div>)

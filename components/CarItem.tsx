@@ -24,7 +24,7 @@ const CarItem: FC<Car> = (props) => {
                 <div className={classes.actions}>
                      <Button href={`${props.id}`}>Инфо</Button>
                     <br/><br/>
-                    {props.own && <Button href={`/sto/repair/${props.id}`}>ремонт</Button>}
+                    {props.own && <Button href={`/sto/repair/request/${props.id}`}>ремонт</Button>}
                 </div>
             </Card>
         </li>

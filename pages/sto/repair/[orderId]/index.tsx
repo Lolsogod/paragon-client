@@ -7,6 +7,7 @@ import axios from "axios";
 import {AuthContext} from "../../../../context/AuthContext";
 import Button from "../../../../components/ui/Button";
 import CarItem from "../../../../components/CarItem";
+import {useAuthCheck} from "../../../../hooks/auth.check.hook";
 
 
 
@@ -22,25 +23,31 @@ const OrderInfo: NextPage = () => {
         setOrder({...order, id: query.orderId})
     },[query.orderId])
     const [works, setWorks] = useState<Work[]>([])
-
+    const [loaded, setLoaded] = useState("false")
     useEffect(() => {
         if (!!auth.token && order.id) {
             axios.get(`/api/works/getWorksById?order_id=${order.id}`,
                 {headers: { Authorization: `Bearer ${auth.token}`},})
-                .then(res => setWorks(res.data))
+                .then(res => {
+                    setLoaded("true")
+                    setWorks(res.data)
+                })
                 .catch(e => console.log(e));
         }
     }, [auth.token, order.id]);
 
     const [result, setResult] = useState<string>("")
     const finishOrder = () =>{
-        axios.post(`/api/orders/repairOrder`,{id: order.id, result},
+        axios.post(`/api/orders/finishRepairOrder`,{id: order.id, result},
             {headers: { Authorization: `Bearer ${auth.token}`}})
             .then(() => alert("завершён"))
             .catch(e => console.log(e));
     }
-
+    const {checkRole, PushBack} = useAuthCheck()
+    if (checkRole("WORKER")) return <PushBack/>
     return (
+        <>
+        {loaded == "true" &&
         <div>
             <Head>
                 <title>Инфо</title>
@@ -65,7 +72,9 @@ const OrderInfo: NextPage = () => {
             <input type="text" placeholder="Введите результат ремонта"
                    onChange={e=>setResult(e.target.value)} value={result} name='result'/>
             <Button onClick={finishOrder}>Завершить</Button>
-        </div>
+        </div>}
+            {loaded=="false" && <div>не верный id</div>}
+        </>
     )
 }
 export default OrderInfo

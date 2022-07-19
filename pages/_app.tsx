@@ -5,14 +5,18 @@ import {useAuth} from "../hooks/auth.hook";
 import { AuthContext } from '../context/AuthContext';
 
 function MyApp({ Component, pageProps }: AppProps) {
-    const {login, logout, token, role} = useAuth()
+    const {login, logout, token, role, ready} = useAuth()
     const isAuthenticated: boolean = !!token;
     return (
-      <AuthContext.Provider value={{token, login, logout, role, isAuthenticated}}>
-          <Layout isAuthenticated={isAuthenticated} role={role}>
-            <Component {...pageProps} isAuthenticated={isAuthenticated} />
-          </Layout>
-      </AuthContext.Provider>
+        <>{ready &&
+          <AuthContext.Provider value={{token, login, logout, role, isAuthenticated}}>
+              <Layout isAuthenticated={isAuthenticated} role={role}>
+                  <Component {...pageProps} isAuthenticated={isAuthenticated} />
+
+              </Layout>
+          </AuthContext.Provider>}
+            {!ready && <div></div>}
+        </>
   )
 }
 

@@ -4,10 +4,11 @@ import AddCar from "../../components/adders/AddCar";
 import {useContext} from "react";
 import {AuthContext} from "../../context/AuthContext";
 import {AuthCtx, Car} from "../../interfaces/interfaces";
+import {useAuthCheck} from "../../hooks/auth.check.hook";
 
 const Admin: NextPage = () => {
-    const auth = useContext<AuthCtx>(AuthContext)
-    if(auth.role != "ADMIN") return <div>нет доступа</div>
+    const {checkRole, PushBack} = useAuthCheck()
+    if (checkRole("ADMIN")) return <PushBack/>
     return (
             <AddCar/>
     )

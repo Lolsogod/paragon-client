@@ -1,14 +1,16 @@
 import {NextPage} from "next";
 import Head from "next/head";
-import {ChangeEvent, useState} from "react";
+import {ChangeEvent, useContext, useState} from "react";
 import axios from "axios";
 import Button from "../components/ui/Button";
 import classes from "../components/Auth.module.css"
-import {User} from "../interfaces/interfaces";
-
+import {AuthCtx, User} from "../interfaces/interfaces";
+import {AuthContext} from "../context/AuthContext";
+import {useRouter} from 'next/router'
+import {useAuthCheck} from "../hooks/auth.check.hook";
 
 const Register: NextPage = () => {
-
+    const auth = useContext<AuthCtx>(AuthContext)
     const [form, setForm] = useState<User & {username: string, password: string}>({
         username:'', password: '', name: '', surname: '', patronymic: ''
     })
@@ -22,6 +24,8 @@ const Register: NextPage = () => {
             {...form})
             .then(() => alert("Зареган!"))
     }
+    const {checkAuth, PushBack} = useAuthCheck()
+    if (checkAuth()) return <PushBack/>
     return (
         <>
             <Head>
@@ -30,17 +34,32 @@ const Register: NextPage = () => {
             <div className={classes.formCont}>
                 <h1>Регистрация</h1>
                 <form>
-                    <label htmlFor="username">Логин</label>
-                    <input type="text" name="username" value={form.username} onChange={changeHandler}/>
-                    <label htmlFor="пароль">Пароль</label>
-                    <input type="password" name="password" value={form.password} onChange={changeHandler}/>
-                    <label htmlFor="пароль">Фамилия</label>
-                    <input type="text" name="surname" value={form.surname} onChange={changeHandler}/>
-                    <label htmlFor="пароль">Имя</label>
-                    <input type="text" name="name" value={form.name} onChange={changeHandler}/>
-                    <label htmlFor="пароль">Отчество</label>
-                    <input type="text" name="patronymic" value={form.patronymic} onChange={changeHandler}/>
-                    <br/><br/>
+                    <div className={`${classes.textField} ${classes.textField_floating}`}>
+                        <input type="text" name="username" value={form.username} placeholder={"a"}
+                               onChange={changeHandler} className={classes.textField__input}/>
+                        <label className={classes.textField__label} htmlFor="username">Логин</label>
+                    </div>
+                    <div className={`${classes.textField} ${classes.textField_floating}`}>
+                        <input type="password" name="password" value={form.password} placeholder={"a"}
+                               onChange={changeHandler} className={classes.textField__input}/>
+                        <label className={classes.textField__label} htmlFor="username">Пароль</label>
+                    </div>
+                    <div className={`${classes.textField} ${classes.textField_floating}`}>
+                        <input type="text" name="surname" value={form.surname} placeholder={"a"}
+                               onChange={changeHandler} className={classes.textField__input}/>
+                        <label className={classes.textField__label} htmlFor="username">Фамилия</label>
+                    </div>
+                    <div className={`${classes.textField} ${classes.textField_floating}`}>
+                        <input type="text" name="name" value={form.name} placeholder={"a"}
+                               onChange={changeHandler} className={classes.textField__input}/>
+                        <label className={classes.textField__label} htmlFor="username">Имя</label>
+                    </div>
+                    <div className={`${classes.textField} ${classes.textField_floating}`}>
+                        <input type="text" name="patronymic" value={form.patronymic} placeholder={"a"}
+                               onChange={changeHandler} className={classes.textField__input}/>
+                        <label className={classes.textField__label} htmlFor="username">Отчество</label>
+                    </div>
+                    <br/>
                     <Button onClick={submitForm}>Зарегистрироваться</Button>
                 </form>
             </div>

@@ -4,13 +4,20 @@ import {AuthContext} from "../../context/AuthContext";
 import {AuthCtx} from "../../interfaces/interfaces";
 import Button from "../../components/ui/Button";
 import classes from "../../components/CarList.module.css";
+import {useRouter} from "next/router";
+import {useAuthCheck} from "../../hooks/auth.check.hook";
+
 
 const StoMain: NextPage = () => {
+    const {checkRole, PushBack} = useAuthCheck()
+    if (checkRole("WORKER")) return <PushBack/>
+    console.log(checkRole("WORKER"))
     return (
         <>
             <div className={classes.adders}>
                 <Button href='/sto/new-type'>Добавить тип детали</Button>
                 <Button href='/sto/new-part'>Добавить деталь</Button>
+                <Button href='/sto/new-work-type'>Добавить тип работы</Button>
             </div>
             <br/>
             <div className={classes.adders}>

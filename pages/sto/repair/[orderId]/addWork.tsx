@@ -5,6 +5,7 @@ import {AuthContext} from "../../../../context/AuthContext";
 import axios from "axios";
 import {useRouter} from "next/router";
 import Button from "../../../../components/ui/Button";
+import {useAuthCheck} from "../../../../hooks/auth.check.hook";
 
 const AddWork = () =>{
     const { query } = useRouter()
@@ -32,6 +33,9 @@ const AddWork = () =>{
             {headers: {Authorization: `Bearer ${auth.token}`}})
             .then(() => alert("успешно добавлено"))
     }
+
+    const {checkRole, PushBack} = useAuthCheck()
+    if (checkRole("WORKER")) return <PushBack/>
     return(
         <div>
             <h1>Работа</h1>

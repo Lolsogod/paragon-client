@@ -4,6 +4,7 @@ import {AuthContext} from "../../context/AuthContext";
 import axios from "axios";
 import {NextPage} from "next";
 import {Brand} from "../../interfaces/interfaces";
+import {useAuthCheck} from "../../hooks/auth.check.hook";
 
 
 const NewModel: NextPage = ()=>{
@@ -17,7 +18,8 @@ const NewModel: NextPage = ()=>{
                 .then(res => setBrands(res.data))
         }
     },[auth.token])
-    if(auth.role != "ADMIN") return <div>нет доступа</div>
+    const {checkRole, PushBack} = useAuthCheck()
+    if (checkRole("ADMIN")) return <PushBack/>
     return( <div>
         <AddModel brands={brands}/>
     </div>)

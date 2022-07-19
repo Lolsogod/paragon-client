@@ -6,6 +6,7 @@ import {AuthCtx, RepairOrderRequest, WorkType} from "../../../../interfaces/inte
 import {AuthContext} from "../../../../context/AuthContext";
 import axios from "axios";
 import Button from "../../../../components/ui/Button";
+import {useAuthCheck} from "../../../../hooks/auth.check.hook";
 
 const RepairCarId: NextPage = () => {
     const auth = useContext<AuthCtx>(AuthContext);
@@ -34,6 +35,9 @@ const RepairCarId: NextPage = () => {
             {headers: {Authorization: `Bearer ${auth.token}`}})
             .then(() => alert("успешно отправлено"))
     }
+    const {checkAuth, PushBack} = useAuthCheck()
+    if (!checkAuth()) return <PushBack/>
+    //TODO: чекать принадлежность машины юзеру
     return (
         <div>
             <Head>
