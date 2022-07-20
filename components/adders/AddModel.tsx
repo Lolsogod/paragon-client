@@ -18,7 +18,7 @@ const AddModel: FC<{brands: Brand[]}> = (props) =>{
                 toast.success("Модель добавленна.")
                 router.push("/admin")
             })
-            .catch(res=> toast.error("Введены екоректные данные."))
+            .catch(()=> toast.error("Введены некоректные данные."))
     }
     const changeHandler = (event: ChangeEvent<HTMLInputElement>) =>{
         setModel(event.target.value)

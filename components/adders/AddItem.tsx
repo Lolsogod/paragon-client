@@ -33,12 +33,12 @@ const AddItem: FC<ItemProps> = (props) => {
                 .then(res => setModels(res.data))
                 .catch(res=> toast.error(res.response.data))
         }else setModels([])
-    },[form.brand_id])
+    },[form.brand_id, auth.token])
 
     const addHandler = () =>{
         axios.post('/api/cars/addCar', form,
             {headers: {Authorization: `Bearer ${auth.token}`}})
-            .then(res =>
+            .then(() =>
                 router.push("/admin")
                     .then(() => toast.success("Машина добавленна"))
             )
@@ -68,7 +68,7 @@ const AddItem: FC<ItemProps> = (props) => {
                                 return(<option key={index} value={md.id}>{md.model}</option>)})}
                         </select>
                         <input className={classes.year} type="number" min="1900" max="2022" step="1" value={form.year}
-                               onChange={changeHandler} name='year' id='year'/>
+                               onChange={changeHandler} name='year' id='year'/> год
                     </div>
                     <div className={classes.flexCenter}>
                         <input className={classes.price} type="number" value={form.price}
@@ -78,7 +78,7 @@ const AddItem: FC<ItemProps> = (props) => {
                             <option  value='NEW'>NEW</option>
                             <option  value='USED'>USED</option>
                         </select>
-                        <input type="text" value={form.img_url}
+                        <input type="text" value={form.img_url} placeholder="Url изображения"
                                onChange={changeHandler} name='img_url' id='img_url'/>
                     </div>
                 </div>

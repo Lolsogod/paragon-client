@@ -30,14 +30,14 @@ const EditItem: FC<ItemProps> = (props) => {
                 {headers: {Authorization: `Bearer ${auth.token}`}})
                 .then(res => setModels(res.data))
         }
-    },[form.brand_id])
+    },[form.brand_id, auth.token])
 
 
     const saveHandler = () =>{
         axios.put('/api/cars/edit',{...form, id: props.id},
             {headers: {Authorization: `Bearer ${auth.token}`}})
             .then(()=> toast.success("Изменения сохранены"))
-            .catch(res=> toast.error("Введены некорректные данные"))
+            .catch(() => toast.error("Введены некорректные данные"))
     }
     const deleteHandler = () =>{
         axios.delete(`/api/cars/delete?id=${props.id}`,
@@ -66,7 +66,7 @@ const EditItem: FC<ItemProps> = (props) => {
                                 return(<option key={index} value={md.id}>{md.model}</option>)})}
                         </select>
                         <input className={classes.year} type="number" min="1900" max="2022" step="1" value={form.year}
-                               onChange={changeHandler} name='year' id='year'/>
+                               onChange={changeHandler} name='year' id='year'/> год
                     </div>
                     <div className={classes.flexCenter}>
                         <input className={classes.price} type="number" value={form.price}
@@ -75,7 +75,7 @@ const EditItem: FC<ItemProps> = (props) => {
                             <option  value='NEW'>NEW</option>
                             <option  value='USED'>USED</option>
                         </select>
-                        <input type="text" value={form.img_url}
+                        <input type="text" value={form.img_url} placeholder="Url изображения"
                                onChange={changeHandler} name='img_url' id='img_url'/>
                     </div>
                 </div>
@@ -83,7 +83,6 @@ const EditItem: FC<ItemProps> = (props) => {
                     <Button onClick={saveHandler}>Сохранить</Button>
                     <Button onClick={deleteHandler}>Удалить</Button>
                 </div>
-
             </Card>
         </li>
     )

@@ -22,13 +22,16 @@ const Profile: NextPage = () => {
                 {headers: {Authorization: `Bearer ${auth.token}`}})
                 .then(res => setUser(res.data))
                 .catch(res=> toast.error(res.response.data))
-    }, [])
+    }, [auth.token])
     useEffect(()=>{
             axios.get('/api/account/cars',
                 {headers: {Authorization: `Bearer ${auth.token}`}})
-                .then(res => setCars(res.data))
+                .then(res => {
+                    console.log(res.data)
+                    setCars(res.data)
+                })
                 .catch(res=> toast.error(res.response.data))
-    }, [])
+    }, [auth.token])
     //заказы
     const [pendingOrders, setPendingOrders] = useState<RepairOrder[]>([])
     useEffect(()=>{
@@ -37,7 +40,7 @@ const Profile: NextPage = () => {
                 .then(res => setPendingOrders(res.data))
                 .catch(res=> toast.error(res.response.data))
 
-    },[])
+    },[auth.token])
     //завершённые
     const [finishedOrders, setFinishedOrders] = useState<RepairOrder[]>([])
     useEffect(()=>{
@@ -46,7 +49,7 @@ const Profile: NextPage = () => {
                 .then(res => setFinishedOrders(res.data))
                 .catch(res=> toast.error(res.response.data))
 
-    },[])
+    },[auth.token])
     const {checkAuth, PushBack} = useAuthCheck()
     if (!checkAuth()) return <PushBack/>
     return (

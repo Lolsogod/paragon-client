@@ -115,6 +115,9 @@ export interface WorkType{
 export interface RepairOrder {
     id: string | string[] | undefined,
     car_id: number,
+    user_id: string,
     order_date: string,
+    description: string,
+    work_type: number
     result: string
 }

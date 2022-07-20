@@ -18,7 +18,7 @@ const AddBrand: FC = () => {
             toast.success("Брэнд добавлен")
             router.push("/admin")
         })
-        .catch(res=> toast.error("Введены екоректные данные."))
+        .catch(()=> toast.error("Введены некоректные данные."))
   };
   const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setBrand(event.target.value);

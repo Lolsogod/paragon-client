@@ -19,9 +19,10 @@ const RepairCarId: NextPage = () => {
     const changeHandler = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setReapairOrder({...repairOrder, [event.target.name]: event.target.value})
     }
+    const [own, setOwn] = useState<boolean>(false)
     useEffect(()=>{
         setReapairOrder({...repairOrder, car_id: query.carId})
-    },[query.carId])
+    },[query.carId,  auth.token])
     const [workTypes, setWorkTypes] = useState<WorkType[]>([]);
 
     useEffect(() => {
@@ -29,9 +30,16 @@ const RepairCarId: NextPage = () => {
             {headers: { Authorization: `Bearer ${auth.token}`},})
             .then(res => setWorkTypes(res.data))
             .catch(res=> toast.error(res.response.data))
-    }, []);
+    }, [ auth.token]);
+    useEffect(()=>{
+        if (repairOrder.car_id)
+            axios.get(`/api/account/checkCar?id=${repairOrder.car_id}`,
+                {headers: { Authorization: `Bearer ${auth.token}`},})
+                .then(res => setOwn(res.data))
+                .catch(()=> setOwn(false))
+    },[repairOrder.car_id, auth.token])
     const send = () =>{
-        axios.post('/api/orders/repairOrder', repairOrder,
+        axios.post(`/api/orders/repairOrder`, repairOrder,
             {headers: {Authorization: `Bearer ${auth.token}`}})
             .then(() => {
                 router.push("/profile")
@@ -41,26 +49,30 @@ const RepairCarId: NextPage = () => {
     }
     const {checkAuth, PushBack} = useAuthCheck()
     if (!checkAuth()) return <PushBack/>
-    //TODO: чекать принадлежность машины юзеру
-    return (
-        <div>
-            <Head>
-                <title>Ремонт</title>
-            </Head>
-            <h1>Запрос на ремонт</h1>
-            <div className="flexCenter">
-                <input style={{"width": "20rem"}} type="text" placeholder="Введите описание проблемы"
-                       onChange={changeHandler} value={repairOrder.description}
-                       name="description" id="description"/>
-                <select value={repairOrder.work_type} onChange={changeHandler} id="work_type" name="work_type">
-                    <option value="">----------</option>
-                    {workTypes.map((wt: WorkType, index:number) =>{
-                        return(<option key={index} value={wt.id}>{wt.name}</option>)})}
-                </select>
-                <Button onClick={send}>Отправить</Button>
+    console.log(own)
+    if (own){
+        return (
+            <div>
+                <Head>
+                    <title>Ремонт</title>
+                </Head>
+                <h1>Запрос на ремонт</h1>
+                <div className="flexCenter">
+                    <input style={{"width": "20rem"}} type="text" placeholder="Введите описание проблемы"
+                           onChange={changeHandler} value={repairOrder.description}
+                           name="description" id="description"/>
+                    <select value={repairOrder.work_type} onChange={changeHandler} id="work_type" name="work_type">
+                        <option value="">----------</option>
+                        {workTypes.map((wt: WorkType, index:number) =>{
+                            return(<option key={index} value={wt.id}>{wt.name}</option>)})}
+                    </select>
+                    <Button onClick={send}>Отправить</Button>
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
+    return (<div>Машина не найдена или не пренадлежит вам</div>)
+
 }
 
 export default RepairCarId

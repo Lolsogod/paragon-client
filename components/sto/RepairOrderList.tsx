@@ -14,6 +14,9 @@ const RepairOrderList: FC<{orders: RepairOrder[]}> = (props) =>{
                         car_id={repairOrder.car_id}
                         order_date={repairOrder.order_date}
                         result={repairOrder.result}
+                        description={repairOrder.description}
+                        user_id={repairOrder.user_id}
+                        work_type={repairOrder.work_type}
 
     />
 ))}

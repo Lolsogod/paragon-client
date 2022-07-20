@@ -19,14 +19,14 @@ const AddWork = () =>{
     } )
     useEffect(()=>{
         setWork({...work, order: query.orderId})
-    },[query.orderId])
+    },[query.orderId, auth.token])
 
     useEffect(()=>{
         axios.get('/api/parts/getAllTypes',
             {headers: {Authorization: `Bearer ${auth.token}`}})
             .then(res => setTypes(res.data))
             .catch(res=> toast.error(res.response.data))
-    },[])
+    },[auth.token])
     const changeHandler = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setWork({...work, [event.target.name]: event.target.value})
     }
@@ -46,10 +46,16 @@ const AddWork = () =>{
         <div>
             <h1>Работа</h1>
             <div className={classes.flexCenter}>
-            <input type="text" placeholder="Введите описание"
-                   onChange={changeHandler} value={work.description} name='description'/>
-            <input type="number" placeholder="Введите цену"
-                   onChange={changeHandler} value={work.work_price} name='work_price'/></div>
+                <div>
+                    <label htmlFor="description">Описание</label>
+                    <input type="text" placeholder="Введите описание"
+                           onChange={changeHandler} value={work.description} name='description'/>
+                </div>
+                <div>
+                    <label htmlFor="work_price">Цена</label>
+                    <input type="number" placeholder="Введите цену"
+                           onChange={changeHandler} value={work.work_price} name='work_price'/></div>
+                </div>
             Детали для работы
             <br/><br/>
             <PartRequestList types={types} repair={true} work={work} setWork={setWork}/>
