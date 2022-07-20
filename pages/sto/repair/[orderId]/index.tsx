@@ -8,6 +8,7 @@ import {AuthContext} from "../../../../context/AuthContext";
 import Button from "../../../../components/ui/Button";
 import {useAuthCheck} from "../../../../hooks/auth.check.hook";
 import classes from "../../../../components/editors/EditItem.module.css"
+import table from "../../../../components/table.module.css"
 import {toast} from "react-toastify";
 
 
@@ -82,35 +83,35 @@ const OrderInfo: NextPage = () => {
                             {works.map((work: Work, index) => (
                                 <>
                                     <h2>{work.description} </h2>
-                                    <table key={index}>
+                                    <table className={table.table} key={index}>
                                         <thead>
-                                        <tr className="table100-head">
-                                            <th className="column1">Название</th>
-                                            <th className="column2">Цена</th>
-                                            <th className="column3">Кол-во</th>
-                                            <th className="column4">Общ. цена</th>
+                                        <tr className={table.tableHead}>
+                                            <th className={table.column1}>Название</th>
+                                            <th className={table.column2}>Цена</th>
+                                            <th className={table.column3}>Кол-во</th>
+                                            <th className={table.column4}>Общ. цена</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         {work.used_parts.map((part)=>(
                                             <tr key={part.part_id}>
-                                                <td className="column1">{part.name}</td>
-                                                <td className="column2">{part.price}</td>
-                                                <td className="column3">{part.count}</td>
-                                                <td className="column4">{part.count*part.price}</td>
+                                                <td className={table.column1}>{part.name}</td>
+                                                <td className={table.column2}>{part.price}</td>
+                                                <td className={table.column3}>{part.count}</td>
+                                                <td className={table.column4}>{part.count*part.price}</td>
                                             </tr>
                                         ))}
                                         <tr>
-                                            <td className="column1">Работа</td>
-                                            <td className="column2">{work.price}</td>
-                                            <td className="column3">1</td>
-                                            <td className="column4">{work.price}</td>
+                                            <td className={table.column1}>Работа</td>
+                                            <td className={table.column2}>{work.price}</td>
+                                            <td className={table.column3}>1</td>
+                                            <td className={table.column4}>{work.price}</td>
                                         </tr>
                                         <tr>
-                                            <td className="column1">Всего</td>
-                                            <td className="column2"></td>
-                                            <td className="column3"></td>
-                                            <td className="column4">{work.total_price}</td>
+                                            <td className={table.column1}>Всего</td>
+                                            <td className={table.column2}></td>
+                                            <td className={table.column3}></td>
+                                            <td className={table.column4}>{work.total_price}</td>
                                         </tr>
                                         </tbody>
                                     </table>
