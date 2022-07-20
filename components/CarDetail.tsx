@@ -7,13 +7,20 @@ import {AuthCtx, Car} from "../interfaces/interfaces";
 import Image from "next/image";
 import sampleCar from "../public/sample_car.jpg";
 import getRuCondition from "../hooks/condition.hook";
+import {toast} from "react-toastify";
+import {useRouter} from "next/router";
 
 const CarDetail: FC<{carInfo: Car}> = (props) =>{
     const auth = useContext<AuthCtx>(AuthContext)
+    const router = useRouter()
     const makeOrder = () =>{
         axios.post(`/api/orders/carOrder?car_id=${props.carInfo.id}`,{},
             {headers: {Authorization: `Bearer ${auth.token}`}})
-            .then(() => alert("Покупка успешно совершена"))
+            .then(() => {
+                toast.success("Покупка успешно совершенна.")
+                router.push("/profile")
+            })
+            .catch(res=> toast.error(res.response.data))
     }
     return(
         <>

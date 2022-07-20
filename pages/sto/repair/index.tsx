@@ -6,6 +6,7 @@ import {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../../../context/AuthContext";
 import RepairOrderList from "../../../components/sto/RepairOrderList";
 import {useAuthCheck} from "../../../hooks/auth.check.hook";
+import {toast} from "react-toastify";
 
 
 const RepairOrders: NextPage = () => {
@@ -13,12 +14,11 @@ const RepairOrders: NextPage = () => {
     const [repairOrders, setRepairOrders] = useState<RepairOrder[]>([])
 
     useEffect(()=>{
-        if(!!auth.token){
-            axios.get('/api/orders/repairOrders',
-                {headers: {Authorization: `Bearer ${auth.token}`}})
-                .then(res => setRepairOrders(res.data))
-        }
-    },[auth.token])
+        axios.get('/api/orders/repairOrders',
+            {headers: {Authorization: `Bearer ${auth.token}`}})
+            .then(res => setRepairOrders(res.data))
+            .catch(res=> toast.error(res.response.data))
+    },[])
     const {checkRole, PushBack} = useAuthCheck()
     if (checkRole("WORKER")) return <PushBack/>
     return (

@@ -3,17 +3,22 @@ import axios from "axios";
 import { ChangeEvent, FC, useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { AuthCtx } from "../../interfaces/interfaces";
+import {toast} from "react-toastify";
+import {useRouter} from "next/router";
 
 const AddBrand: FC = () => {
   const auth: AuthCtx = useContext(AuthContext);
+  const router = useRouter()
   const [brand, setBrand] = useState<string>("");
 
   const send = () => {
-    axios
-      .post("/api/cars/brand",  brand,
+    axios.post("/api/cars/addBrand",  {brand},
         { headers: { Authorization: `Bearer ${auth.token}` } })
-      .then((res) => console.log(res))
-      .catch(() => alert("Неудалось добавить брэнд..."));
+        .then(() => {
+            toast.success("Брэнд добавлен")
+            router.push("/admin")
+        })
+        .catch(res=> toast.error("Введены екоректные данные."))
   };
   const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setBrand(event.target.value);

@@ -3,8 +3,8 @@
 }
 
 .image {
-    width: 8rem;
-    height: 8rem;
+    width: 8.75rem;
+    height: 8.75rem;
     overflow: hidden;
     border-top-left-radius: .25rem;
     border-bottom-left-radius: .25rem;
@@ -58,9 +58,9 @@
     margin-bottom: .7rem;
     align-items: center;
 }
-.flex .price{
-    width: 6rem;
+.flexCenter .price{
+    width: 8rem;
 }
-.flex .year{
-    width: 4.1rem;
+.flexCenter .year{
+    width: 6rem;
 }

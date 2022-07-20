@@ -9,6 +9,8 @@ import {AuthContext} from "../context/AuthContext";
 import {useRouter} from 'next/router'
 import {useAuthCheck} from "../hooks/auth.check.hook";
 
+import { toast } from 'react-toastify';
+
 const Register: NextPage = () => {
     const auth = useContext<AuthCtx>(AuthContext)
     const [form, setForm] = useState<User & {username: string, password: string}>({
@@ -22,7 +24,8 @@ const Register: NextPage = () => {
     const submitForm = async () =>{
         await axios.post("http://localhost:8081/auth/",
             {...form})
-            .then(() => alert("Зареган!"))
+            .then(() => toast.success("Ргистрация прошла успешно!"))
+            .catch(res=> toast.error(res.response.data))
     }
     const {checkAuth, PushBack} = useAuthCheck()
     if (checkAuth()) return <PushBack/>

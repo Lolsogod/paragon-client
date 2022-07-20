@@ -7,9 +7,11 @@ import {useRouter} from "next/router";
 import Button from "../../../../components/ui/Button";
 import {useAuthCheck} from "../../../../hooks/auth.check.hook";
 import classes from "../../../../components/editors/EditItem.module.css";
+import {toast} from "react-toastify";
 
 const AddWork = () =>{
     const { query } = useRouter()
+    const router = useRouter()
     const auth = useContext<AuthCtx>(AuthContext)
     const [types, setTypes] = useState<PartType[]>([])
     const [work, setWork] = useState<WorkRequest>({
@@ -20,19 +22,22 @@ const AddWork = () =>{
     },[query.orderId])
 
     useEffect(()=>{
-        if(!!auth.token){
-            axios.get('/api/parts/getAllTypes',
-                {headers: {Authorization: `Bearer ${auth.token}`}})
-                .then(res => setTypes(res.data))
-        }
-    },[auth.token])
+        axios.get('/api/parts/getAllTypes',
+            {headers: {Authorization: `Bearer ${auth.token}`}})
+            .then(res => setTypes(res.data))
+            .catch(res=> toast.error(res.response.data))
+    },[])
     const changeHandler = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setWork({...work, [event.target.name]: event.target.value})
     }
     const addHandler = () =>{
         axios.post('/api/works/addWork', work,
             {headers: {Authorization: `Bearer ${auth.token}`}})
-            .then(() => alert("успешно добавлено"))
+            .then(() => {
+                toast.success("Работа добавленна.")
+                router.push(`/sto/repair/${work.order}`)
+            })
+            .catch(res=> toast.error(res.response.data))
     }
 
     const {checkRole, PushBack} = useAuthCheck()

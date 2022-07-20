@@ -5,17 +5,17 @@ import axios from "axios";
 import {AuthContext} from "../../context/AuthContext";
 import Button from "../ui/Button";
 import {AuthCtx, Brand, Car} from "../../interfaces/interfaces";
+import {toast} from "react-toastify";
 
 const EditList: FC<{cars: Car[]}> = (props) =>{
     const auth = useContext<AuthCtx>(AuthContext)
     const [brands, setBrands] = useState<Brand[]>([])
     useEffect(()=>{
-        if(!!auth.token){
-            axios.get('/api/cars/brand',
-                {headers: {Authorization: `Bearer ${auth.token}`}})
-                .then(res => setBrands(res.data))
-        }
-    },[auth.token])
+        axios.get('/api/cars/brand',
+            {headers: {Authorization: `Bearer ${auth.token}`}})
+            .then(res => setBrands(res.data))
+            .catch(res=> toast.error(res.response.data))
+    },[])
     return(<>
             <div className={classes.adders}>
                 <Button href='/admin/new-brand'>Добавить брэнд</Button>

@@ -5,12 +5,15 @@ import Button from "../ui/Button";
 import PartRequestItem from "./PartRequestItem";
 import axios from "axios";
 import {AuthContext} from "../../context/AuthContext";
+import {toast} from "react-toastify";
+import {useRouter} from "next/router";
 
 
 const PartRequestList: FC<{types: PartType[], repair?: boolean, work?: WorkRequest,
     //TODO: поднять часть от ориг реквеста
     setWork? : Dispatch<SetStateAction<WorkRequest>>}> = (props) =>{
     const auth = useContext<AuthCtx>(AuthContext)
+    const router = useRouter()
     const [reqParts, setReqParts] = useState<OrderPartRequest[]>([
         {id: 0, count: 1}
     ])
@@ -25,7 +28,11 @@ const PartRequestList: FC<{types: PartType[], repair?: boolean, work?: WorkReque
     const send = () =>{
         axios.post('/api/orders/partsOrder', {partRequests: reqParts},
             {headers: {Authorization: `Bearer ${auth.token}`}})
-            .then(() => alert("успешно заказанно"))
+            .then(() => {
+                toast.success("Заказ выполнен.")
+                router.push("/sto/parts")
+            })
+            .catch(()=> toast.error("Неудалось заказать запчасти"))
     }
     const setWorkParts = (parts: OrderPartRequest[]) => {
         if (props.setWork !=undefined && props.work !=undefined)

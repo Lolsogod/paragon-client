@@ -8,6 +8,7 @@ import CarList from "../components/CarList";
 import {AuthCtx, Car, RepairOrder, User} from "../interfaces/interfaces";
 import {useAuthCheck} from "../hooks/auth.check.hook";
 import RepairOrderList from "../components/sto/RepairOrderList";
+import {toast} from "react-toastify";
 
 const Profile: NextPage = () => {
     const auth = useContext<AuthCtx>(AuthContext)
@@ -17,37 +18,35 @@ const Profile: NextPage = () => {
     const [cars, setCars] = useState<Car[]>()
     const [order, setOrder] = useState<string>("1")
     useEffect(()=>{
-        if(auth.token){
             axios.get('/api/account',
                 {headers: {Authorization: `Bearer ${auth.token}`}})
                 .then(res => setUser(res.data))
-        }
-    }, [auth.token])
+                .catch(res=> toast.error(res.response.data))
+    }, [])
     useEffect(()=>{
-        if(auth.token){
             axios.get('/api/account/cars',
                 {headers: {Authorization: `Bearer ${auth.token}`}})
                 .then(res => setCars(res.data))
-        }
-    }, [auth.token])
+                .catch(res=> toast.error(res.response.data))
+    }, [])
     //заказы
     const [pendingOrders, setPendingOrders] = useState<RepairOrder[]>([])
     useEffect(()=>{
-        if(!!auth.token){
             axios.get('/api/account/repairOrders',
                 {headers: {Authorization: `Bearer ${auth.token}`}})
                 .then(res => setPendingOrders(res.data))
-        }
-    },[auth.token])
+                .catch(res=> toast.error(res.response.data))
+
+    },[])
     //завершённые
     const [finishedOrders, setFinishedOrders] = useState<RepairOrder[]>([])
     useEffect(()=>{
-        if(!!auth.token){
             axios.get('/api/account/finishedRepairOrders',
                 {headers: {Authorization: `Bearer ${auth.token}`}})
                 .then(res => setFinishedOrders(res.data))
-        }
-    },[auth.token])
+                .catch(res=> toast.error(res.response.data))
+
+    },[])
     const {checkAuth, PushBack} = useAuthCheck()
     if (!checkAuth()) return <PushBack/>
     return (

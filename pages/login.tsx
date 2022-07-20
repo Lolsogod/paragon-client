@@ -8,6 +8,8 @@ import classes from "../components/Auth.module.css"
 import Button from "../components/ui/Button";
 import {useAuthCheck} from "../hooks/auth.check.hook";
 
+import { toast } from 'react-toastify';
+
 
 const Login: NextPage = () => {
     const auth = useContext(AuthContext)
@@ -17,8 +19,12 @@ const Login: NextPage = () => {
     const submitForm = async () =>{
         await axios.post("http://localhost:8081/auth/token",
             {username, password})
-            .then(res => auth.login(res.data.token))
-        await router.push("/")
+            .then(async res => {
+                auth.login(res.data.token)
+                await router.push("/")
+            })
+            .catch(res=> toast.error(res.response.data))
+
     }
 
     const {checkAuth, PushBack} = useAuthCheck()

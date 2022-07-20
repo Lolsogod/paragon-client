@@ -7,18 +7,18 @@ import {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../../../context/AuthContext";
 import {useAuthCheck} from "../../../hooks/auth.check.hook";
 import Button from "../../../components/ui/Button";
+import {toast} from "react-toastify";
 
 const Parts: NextPage = () => {
     const auth = useContext<AuthCtx>(AuthContext)
     const [parts, setParts] = useState<Part[]>([])
 
     useEffect(()=>{
-        if(!!auth.token){
-            axios.get('/api/parts/allParts',
-                {headers: {Authorization: `Bearer ${auth.token}`}})
-                .then(res => setParts(res.data))
-        }
-    },[auth.token])
+        axios.get('/api/parts/allParts',
+            {headers: {Authorization: `Bearer ${auth.token}`}})
+            .then(res => setParts(res.data))
+            .catch(res=> toast.error(res.response.data))
+    },[])
     const {checkRole, PushBack} = useAuthCheck()
     if (checkRole("WORKER")) return <PushBack/>
     return (

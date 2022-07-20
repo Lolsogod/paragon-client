@@ -7,10 +7,12 @@ import {AuthContext} from "../../../../context/AuthContext";
 import axios from "axios";
 import Button from "../../../../components/ui/Button";
 import {useAuthCheck} from "../../../../hooks/auth.check.hook";
+import {toast} from "react-toastify";
 
 const RepairCarId: NextPage = () => {
     const auth = useContext<AuthCtx>(AuthContext);
     const { query } = useRouter();
+    const router = useRouter()
     const [repairOrder, setReapairOrder] = useState<RepairOrderRequest>({
         car_id: query.carId, description: '', work_type: 0
     })
@@ -23,17 +25,19 @@ const RepairCarId: NextPage = () => {
     const [workTypes, setWorkTypes] = useState<WorkType[]>([]);
 
     useEffect(() => {
-        if (!!auth.token) {
-            axios.get("/api/works/getTypes",
-                {headers: { Authorization: `Bearer ${auth.token}`},})
-                .then(res => setWorkTypes(res.data))
-                .catch(e => console.log(e));
-        }
-    }, [auth.token]);
+        axios.get("/api/works/getTypes",
+            {headers: { Authorization: `Bearer ${auth.token}`},})
+            .then(res => setWorkTypes(res.data))
+            .catch(res=> toast.error(res.response.data))
+    }, []);
     const send = () =>{
         axios.post('/api/orders/repairOrder', repairOrder,
             {headers: {Authorization: `Bearer ${auth.token}`}})
-            .then(() => alert("успешно отправлено"))
+            .then(() => {
+                router.push("/profile")
+                    .then(()=>toast.success("Запрос успешно отправлен!"))
+            })
+            .catch(res=> toast.error(res.response.data))
     }
     const {checkAuth, PushBack} = useAuthCheck()
     if (!checkAuth()) return <PushBack/>
@@ -44,16 +48,17 @@ const RepairCarId: NextPage = () => {
                 <title>Ремонт</title>
             </Head>
             <h1>Запрос на ремонт</h1>
-            <input type="text" placeholder="Введите описание проблемы"
-                   onChange={changeHandler} value={repairOrder.description}
-                   name="description" id="description"/>
-            <select value={repairOrder.work_type} onChange={changeHandler} id="work_type" name="work_type">
-                <option value="">----------</option>
-                {workTypes.map((wt: WorkType, index:number) =>{
-                    return(<option key={index} value={wt.id}>{wt.name}</option>)})}
-            </select>
-            <Button onClick={send}>Отправить</Button>
-
+            <div className="flexCenter">
+                <input style={{"width": "20rem"}} type="text" placeholder="Введите описание проблемы"
+                       onChange={changeHandler} value={repairOrder.description}
+                       name="description" id="description"/>
+                <select value={repairOrder.work_type} onChange={changeHandler} id="work_type" name="work_type">
+                    <option value="">----------</option>
+                    {workTypes.map((wt: WorkType, index:number) =>{
+                        return(<option key={index} value={wt.id}>{wt.name}</option>)})}
+                </select>
+                <Button onClick={send}>Отправить</Button>
+            </div>
         </div>
     )
 }

@@ -4,24 +4,24 @@ import {AuthContext} from "../../context/AuthContext";
 import axios from "axios";
 import classes from "../editors/EditItem.module.css";
 import Button from "../ui/Button";
+import {toast} from "react-toastify";
+import {useRouter} from "next/router";
 
 const AddPart: FC<{brands: Brand[], types: PartType[]} > = (props) =>{
     const auth = useContext<AuthCtx>(AuthContext)
-
+    const router= useRouter()
     const [partRequest, setParRequest] = useState<PartRequest>(
         {name: '', brand: 0, model: 0, price:0, type: 0}
     )
 
     const [models, setModels] = useState<Model[]>([])
     useEffect(()=>{
-        if(!!auth.token){
-            if(!!partRequest.brand){
-                axios.get(`/api/cars/model?brand_id=${partRequest.brand}`,
-                    {headers: {Authorization: `Bearer ${auth.token}`}})
-                    .then(res => setModels(res.data))
-            }else setModels([])
-        }
-    },[auth.token, partRequest.brand])
+        if(!!partRequest.brand){
+            axios.get(`/api/cars/model?brand_id=${partRequest.brand}`,
+                {headers: {Authorization: `Bearer ${auth.token}`}})
+                .then(res => setModels(res.data))
+        }else setModels([])
+    },[partRequest.brand])
 
     const changeHandler = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setParRequest({...partRequest, [event.target.name]: event.target.value})
@@ -29,7 +29,9 @@ const AddPart: FC<{brands: Brand[], types: PartType[]} > = (props) =>{
     const addHandler = () =>{
         axios.post('/api/parts/addPart', partRequest,
             {headers: {Authorization: `Bearer ${auth.token}`}})
-            .then(res => console.log(res))
+            .then(res => router.push("/admin")
+                .then(()=>toast.success("Деталь добавленна.")))
+            .catch(res=> toast.error(res.response.data))
     }
     return(
 

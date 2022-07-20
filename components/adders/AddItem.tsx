@@ -7,11 +7,14 @@ import {ChangeEvent, FC, useContext, useEffect, useState} from "react";
 import axios from "axios";
 import {AuthContext} from "../../context/AuthContext";
 import {AddCarResponse, AuthCtx,ItemProps, Model} from "../../interfaces/interfaces";
+import {toast} from "react-toastify";
+import {useRouter} from "next/router";
 
 
 
 const AddItem: FC<ItemProps> = (props) => {
     const auth = useContext<AuthCtx>(AuthContext)
+    const router = useRouter()
     const [form, setForm] = useState<AddCarResponse>({
         brand_id: props.brand.id, model_id: props.model.id,
         year: props.year, price: props.price, condition: props.condition,
@@ -24,19 +27,25 @@ const AddItem: FC<ItemProps> = (props) => {
 
     const [models, setModels] = useState<Model[]>([])
     useEffect(()=>{
-        if(!!auth.token){
-            if(!!form.brand_id){
-                axios.get(`/api/cars/model?brand_id=${form.brand_id}`,
-                    {headers: {Authorization: `Bearer ${auth.token}`}})
-                    .then(res => setModels(res.data))
-            }else setModels([])
-        }
-    },[auth.token, form.brand_id])
+        if(!!form.brand_id){
+            axios.get(`/api/cars/model?brand_id=${form.brand_id}`,
+                {headers: {Authorization: `Bearer ${auth.token}`}})
+                .then(res => setModels(res.data))
+                .catch(res=> toast.error(res.response.data))
+        }else setModels([])
+    },[form.brand_id])
 
     const addHandler = () =>{
-        axios.post('/api/cars/', form,
+        axios.post('/api/cars/addCar', form,
             {headers: {Authorization: `Bearer ${auth.token}`}})
-            .then(res => console.log(res))
+            .then(res =>
+                router.push("/admin")
+                    .then(() => toast.success("Машина добавленна"))
+            )
+            .catch(res=> {
+                console.log(res)
+                toast.error(res.response.data)
+            })
     }
 
     return(
@@ -47,7 +56,7 @@ const AddItem: FC<ItemProps> = (props) => {
                     <Image src={sampleCar} alt='car'/>}
                 </div>
                 <div className={classes.content}>
-                    <div className={classes.flex}>
+                    <div className={classes.flexCenter}>
                         <select value={form.brand_id} onChange={changeHandler} id="brand_id" name="brand_id">
                             <option value="">----------</option>
                             {props.brands.map((br: any, index:any) =>{
@@ -61,7 +70,7 @@ const AddItem: FC<ItemProps> = (props) => {
                         <input className={classes.year} type="number" min="1900" max="2022" step="1" value={form.year}
                                onChange={changeHandler} name='year' id='year'/>
                     </div>
-                    <div className={classes.flex}>
+                    <div className={classes.flexCenter}>
                         <input className={classes.price} type="number" value={form.price}
                                onChange={changeHandler} name='price' id='price'/> руб
                         <select value={form.condition} onChange={changeHandler} id="condition" name="condition">

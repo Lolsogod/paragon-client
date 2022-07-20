@@ -3,15 +3,22 @@ import axios from "axios";
 import {ChangeEvent, FC, useContext, useState} from "react";
 import {AuthContext} from "../../context/AuthContext";
 import {AuthCtx, Brand} from "../../interfaces/interfaces";
+import {toast} from "react-toastify";
+import {useRouter} from "next/router";
 
 const AddModel: FC<{brands: Brand[]}> = (props) =>{
     const auth = useContext<AuthCtx>(AuthContext)
+    const router = useRouter()
     const [model, setModel] = useState<string>('')
     const [brand, setBrand] = useState<string>('')
     const send = ()=>{
-        axios.post('/api/cars/model', {model, brand_id: brand},
+        axios.post('/api/cars/addModel', {model, brand_id: brand},
             {headers: {Authorization: `Bearer ${auth.token}`}})
-            .then(res=>console.log(res))
+            .then(()=> {
+                toast.success("Модель добавленна.")
+                router.push("/admin")
+            })
+            .catch(res=> toast.error("Введены екоректные данные."))
     }
     const changeHandler = (event: ChangeEvent<HTMLInputElement>) =>{
         setModel(event.target.value)

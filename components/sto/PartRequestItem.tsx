@@ -5,6 +5,7 @@ import Card from "../ui/Card";
 import axios from "axios";
 import {AuthContext} from "../../context/AuthContext";
 import Button from "../ui/Button";
+import {toast} from "react-toastify";
 
 //TODO: убрать any
 const PartRequestItem: FC<{
@@ -14,14 +15,13 @@ const PartRequestItem: FC<{
     const [type, setType] = useState<number>(0);
     const [parts, setParts] = useState<Part[]>([])
     useEffect(()=>{
-        if(!!auth.token){
-            if(type !=0){
-                axios.get(`/api/parts/getPartByType?id=${type}`,
-                    {headers: {Authorization: `Bearer ${auth.token}`}})
-                    .then(res => setParts(res.data))
-            }else setParts([])
-        }
-    },[auth.token, type])
+        if(type !=0){
+            axios.get(`/api/parts/getPartByType?id=${type}`,
+                {headers: {Authorization: `Bearer ${auth.token}`}})
+                .then(res => setParts(res.data))
+                .catch(res=> toast.error(res.response.data))
+        }else setParts([])
+    },[type])
 
     const changeHandler = (event: ChangeEvent<HTMLSelectElement>)=>{
         const updatedReqParts =  props.reqParts.slice()
