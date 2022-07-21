@@ -5,7 +5,6 @@ const nextConfig = {
 }
 module.exports = {
   reactStrictMode: false,
-  output: 'standalone',
   async rewrites() {
     return [
       {
