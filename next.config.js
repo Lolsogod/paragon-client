@@ -1,9 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 
-  reactStrictMode: false
+
 }
 module.exports = {
+  reactStrictMode: false,
+  output: 'standalone',
   async rewrites() {
     return [
       {
@@ -27,6 +29,6 @@ module.exports = {
         destination: 'http://localhost:8083/works/:path*'
       }
     ]
-  },
+  }
 }
 
