@@ -18,13 +18,13 @@ const Profile: NextPage = () => {
     const [cars, setCars] = useState<Car[]>()
     const [order, setOrder] = useState<string>("1")
     useEffect(()=>{
-            axios.get('/api/account',
+            axios.get('http://localhost:8081/account',
                 {headers: {Authorization: `Bearer ${auth.token}`}})
                 .then(res => setUser(res.data))
                 .catch(res=> toast.error(res.response.data))
     }, [auth.token])
     useEffect(()=>{
-            axios.get('/api/account/cars',
+            axios.get('http://localhost:8081/account/cars',
                 {headers: {Authorization: `Bearer ${auth.token}`}})
                 .then(res => {
                     console.log(res.data)
@@ -35,7 +35,7 @@ const Profile: NextPage = () => {
     //заказы
     const [pendingOrders, setPendingOrders] = useState<RepairOrder[]>([])
     useEffect(()=>{
-            axios.get('/api/account/repairOrders',
+            axios.get('http://localhost:8081/account/repairOrders',
                 {headers: {Authorization: `Bearer ${auth.token}`}})
                 .then(res => setPendingOrders(res.data))
                 .catch(res=> toast.error(res.response.data))

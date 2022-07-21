@@ -28,7 +28,7 @@ const AddItem: FC<ItemProps> = (props) => {
     const [models, setModels] = useState<Model[]>([])
     useEffect(()=>{
         if(!!form.brand_id){
-            axios.get(`/api/cars/model?brand_id=${form.brand_id}`,
+            axios.get(`http://localhost:8080/cars/model?brand_id=${form.brand_id}`,
                 {headers: {Authorization: `Bearer ${auth.token}`}})
                 .then(res => setModels(res.data))
                 .catch(res=> toast.error(res.response.data))
@@ -36,7 +36,7 @@ const AddItem: FC<ItemProps> = (props) => {
     },[form.brand_id, auth.token])
 
     const addHandler = () =>{
-        axios.post('/api/cars/addCar', form,
+        axios.post('http://localhost:8080/cars/addCar', form,
             {headers: {Authorization: `Bearer ${auth.token}`}})
             .then(() =>
                 router.push("/admin")

@@ -26,7 +26,7 @@ const EditItem: FC<ItemProps> = (props) => {
     const [models, setModels] = useState<Model[]>([])
     useEffect(()=>{
         if(!!form.brand_id) {
-            axios.get(`/api/cars/model?brand_id=${form.brand_id}`,
+            axios.get(`http://localhost:8080/cars/model?brand_id=${form.brand_id}`,
                 {headers: {Authorization: `Bearer ${auth.token}`}})
                 .then(res => setModels(res.data))
         }
@@ -34,13 +34,13 @@ const EditItem: FC<ItemProps> = (props) => {
 
 
     const saveHandler = () =>{
-        axios.put('/api/cars/edit',{...form, id: props.id},
+        axios.put('http://localhost:8080/cars/edit',{...form, id: props.id},
             {headers: {Authorization: `Bearer ${auth.token}`}})
             .then(()=> toast.success("Изменения сохранены"))
             .catch(() => toast.error("Введены некорректные данные"))
     }
     const deleteHandler = () =>{
-        axios.delete(`/api/cars/delete?id=${props.id}`,
+        axios.delete(`http://localhost:8080/cars/delete?id=${props.id}`,
             {headers: {Authorization: `Bearer ${auth.token}`}})
             .then(()=> router.reload())
             .catch(res=> toast.error(res.response.data))

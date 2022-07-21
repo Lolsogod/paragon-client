@@ -11,7 +11,7 @@ const EditList: FC<{cars: Car[]}> = (props) =>{
     const auth = useContext<AuthCtx>(AuthContext)
     const [brands, setBrands] = useState<Brand[]>([])
     useEffect(()=>{
-        axios.get('/api/cars/brand',
+        axios.get('http://localhost:8080/cars/brand',
             {headers: {Authorization: `Bearer ${auth.token}`}})
             .then(res => setBrands(res.data))
             .catch(res=> toast.error(res.response.data))

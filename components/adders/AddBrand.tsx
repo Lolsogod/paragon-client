@@ -12,7 +12,7 @@ const AddBrand: FC = () => {
   const [brand, setBrand] = useState<string>("");
 
   const send = () => {
-    axios.post("/api/cars/addBrand",  {brand},
+    axios.post("http://localhost:8080/addBrand",  {brand},
         { headers: { Authorization: `Bearer ${auth.token}` } })
         .then(() => {
             toast.success("Брэнд добавлен")
